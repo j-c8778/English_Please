@@ -1,6 +1,6 @@
 # English_Please
 
-## This script is designed to move the mouse to 4 specified locations and click once at each location.
+## This script is designed to move the mouse to some specified locations and click once at each location while on a certain website.
 
 ### Build Path:  
 --Pre-Alpha--  
