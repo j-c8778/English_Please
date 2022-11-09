@@ -14,8 +14,8 @@
 0.1.1 - Adds logging  
   
 --Beta--  
-0.1.1 - Adds bottom banner function  
-0.1.2 - Adds automatic detection function  
+0.2.0 - Adds bottom banner function  
+0.2.1 - Adds automatic detection function  
   
 --Release--  
 1.0.0 - Release Version, includes documentation  
