@@ -11,6 +11,7 @@
   
 --Alpha--  
 0.1.0 - Adds Configuration Interface  
+0.1.1 - Adds logging  
   
 --Beta--  
 0.1.1 - Adds bottom banner function  
