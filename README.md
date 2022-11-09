@@ -3,5 +3,7 @@
 ## This script is designed to move the mouse to 4 specified locations and click once at each location.
 
 To Do:  
-[ ] - Add Screen Capture (long term)  
-[ ] - Add Setup to test interface (short term)
+[ ] - Add Screen Scan
+[ ] - Update path 2 with screen scan coordinates
+[ ] - Add configuration interface (short term)  
+[ ] - Add 
