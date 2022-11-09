@@ -17,5 +17,5 @@
 0.1.1 - Adds bottom banner function  
 0.1.2 - Adds automatic detection function  
   
---Release--
+--Release--  
 1.0.0 - Release Version, includes documentation  
