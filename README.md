@@ -17,7 +17,7 @@
 --Beta--  
 0.2.0 - Adds GUI for configuration and operation  
 0.2.1 - Adds bottom banner function  
-0.2.2 - Adds automatic detection function  
   
 --Release--  
 1.0.0 - Release Version, includes documentation  
+1.1.0 - Adds automatic detection function  
