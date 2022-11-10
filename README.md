@@ -6,13 +6,13 @@
   
 --Pre-Alpha--  
 [x] 0.0.1 - Proof of Concept Build  
-[ ] 0.0.2 - Adds Screen Scan to locate path 2 target  
+[x] 0.0.2 - Adds Screen Scan to locate path 2 target  
 [ ] 0.0.3 - Adds exception handling  
   
 --Alpha--  
 [ ] 0.1.0 - Adds Configuration Interface  
-[ ] 0.1.1 - Adds JSON configuration support  
-[ ] 0.1.2 - Adjusts pyautogui pause to 0.01 vice 0.1 seconds  
+[x] 0.1.1 - Adjusts pyautogui pause to 0.01 vice 0.1 seconds  
+[ ] 0.1.2 - Adds JSON configuration support  
 [ ] 0.1.3 - Adds logging  
   
 --Beta--  
