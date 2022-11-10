@@ -8,6 +8,7 @@
 [x] 0.0.1 - Proof of Concept Build  
 [x] 0.0.2 - Adds Screen Scan to locate path 2 target  
 [ ] 0.0.3 - Adds exception handling  
+[ ] 0.0.4 - Adds wait if path2 target not found
   
 --Alpha--  
 [ ] 0.1.0 - Adds Configuration Interface with JSON file  
