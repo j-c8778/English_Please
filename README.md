@@ -11,7 +11,7 @@
   
 --Alpha--  
 [ ] 0.1.0 - Adds Configuration Interface  
-[ ] 0.1.1 - Adds Add JSON configuration support  
+[ ] 0.1.1 - Adds JSON configuration support  
 [ ] 0.1.2 - Adjusts pyautogui pause to 0.01 vice 0.1 seconds  
 [ ] 0.1.3 - Adds logging  
   
