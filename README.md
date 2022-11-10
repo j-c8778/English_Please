@@ -10,9 +10,9 @@
 [ ] 0.0.3 - Adds exception handling  
   
 --Alpha--  
-[ ] 0.1.0 - Adds Configuration Interface  
+[ ] 0.1.0 - Adds Configuration Interface with JSON file  
 [x] 0.1.1 - Adjusts pyautogui pause to 0.01 vice 0.1 seconds  
-[ ] 0.1.2 - Adds JSON configuration support  
+[ ] 0.1.2 - Adds Full Screen support  
 [ ] 0.1.3 - Adds logging  
   
 --Beta--  
