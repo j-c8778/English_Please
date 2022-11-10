@@ -5,7 +5,7 @@
 ### Build Path:  
   
 --Pre-Alpha--  
-[ ] 0.0.1 - Proof of Concept Build  
+[_] 0.0.1 - Proof of Concept Build  
 [ ] 0.0.2 - Adds Screen Scan to locate path 2 target  
 [ ] 0.0.3 - Adds exception handling  
   
