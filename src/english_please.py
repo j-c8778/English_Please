@@ -28,6 +28,7 @@ Requires the following imports:
 -random
 -time
 -cv2 (opencv)
+-logging
 
 Requires the following files to be present in the same directory as the module.
 -
@@ -35,6 +36,7 @@ Requires the following files to be present in the same directory as the module.
 import random
 from random import randrange
 import time
+import logging
 import pyautogui
 
 
@@ -48,9 +50,19 @@ def move_to_1():
     """
     # x_cord = 212
     # y_cord = 829
+    x_cord = None
+    y_cord = None
     obj = "./graphics/p1_target_obj.png"
-    x_cord = (find_path(obj, 0.9)[0]) + 5
-    y_cord = (find_path(obj, 0.9)[1]) + 3
+    try:
+        x_cord = (find_path(obj, 0.9)[0]) + 5
+        y_cord = (find_path(obj, 0.9)[1]) + 3
+    except TypeError:
+        try:
+            time.sleep(0.5)
+            x_cord = (find_path(obj, 0.9)[0]) + 5
+            y_cord = (find_path(obj, 0.9)[1]) + 3
+        except TypeError as error:
+            logging.exception(error)
     # movement time in seconds
     delay_base = 0.25
     # degrade of the base delay, a random floating point number
@@ -71,9 +83,19 @@ def move_to_2():
     1 crossing stop sign like icon.
     :return: None
     """
+    x_cord = None
+    y_cord = None
     obj = "./graphics/p2_target_obj.png"
-    x_cord = find_path(obj, 0.9)[0]
-    y_cord = find_path(obj, 0.9)[1]
+    try:
+        x_cord = find_path(obj, 0.9)[0]
+        y_cord = find_path(obj, 0.9)[1]
+    except TypeError:
+        try:
+            time.sleep(0.5)
+            x_cord = find_path(obj, 0.9)[0]
+            y_cord = find_path(obj, 0.9)[1]
+        except TypeError as error:
+            logging.exception(error)
     # movement time in seconds
     delay_base = 0.25
     # degrade of the base delay, a random floating point number
@@ -197,12 +219,17 @@ def find_path(obj, conf):
     target x and y coordinates.
     :return: cord (tuple)
     """
-    cord = pyautogui.locateOnScreen(obj, confidence=conf)
+    cord = None
+    try:
+        cord = pyautogui.locateOnScreen(obj, confidence=conf)
+    except pyautogui.ImageNotFoundException as error:
+        logging.debug(error)
     return cord
 
 
 def main():
     """Main Method of the program."""
+    logging.basicConfig(filename="./error_logs.txt", encoding="utf-8", level=logging.DEBUG)
     action()
     # test_interface()
     # pyautogui.moveTo(find_path_2())
