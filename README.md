@@ -7,14 +7,13 @@
 --Pre-Alpha--  
 [x] 0.0.1 - Proof of Concept Build  
 [x] 0.0.2 - Adds Screen Scan to locate path 2 target  
-[ ] 0.0.3 - Adds exception handling  
-[ ] 0.0.4 - Adds wait if path2 target not found
-  
+[x] 0.0.3 - Adds wait if path1 or path2 targets not found  
+[ ] 0.0.4 - Adds exception handling and logging output  
+[x] 0.0.5 - Adjusts pyautogui pause to 0.01 vice 0.1 seconds    
+
 --Alpha--  
 [ ] 0.1.0 - Adds Configuration Interface with JSON file  
-[x] 0.1.1 - Adjusts pyautogui pause to 0.01 vice 0.1 seconds  
 [ ] 0.1.2 - Adds Full Screen support  
-[ ] 0.1.3 - Adds logging functionality  
 [ ] 0.1.4 - Adds hotkey functionality, updates configuration menu  
   
 --Beta--  
