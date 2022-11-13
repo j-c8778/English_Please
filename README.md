@@ -1,6 +1,6 @@
 # English_Please  
 
-## This script is designed to move the mouse to some specified locations and click once at each location while on a certain website.  
+## This script is intended to move the mouse on the primary monitor to some specified locations, click once at each location while on a certain website, and repeat as necessary from a hotkey trigger.  
 
 ### Build Path:  
   
@@ -17,10 +17,15 @@
 [ ] 0.1.2 - Adds Full Screen support  
   
 --Beta--  
-[ ] 0.2.0 - Adds hotkey functionality  
-[ ] 0.2.1 - Adds GUI for configuration and operation  
-[ ] 0.2.2 - Adds bottom banner function  
+[ ] 0.2.0 - Executable Release via PyInstaller (tenative based on 0.1.0 testing)  
+[ ] 0.2.1 - Adds hotkey functionality  
+[ ] 0.2.2 - Adds basic GUI for configuration and operation  
+[ ] 0.2.3 - Adds bottom banner function  
   
 --Release--  
-[ ] 1.0.0 - Release Version, includes documentation  
-[ ] 1.1.0 - Adds automatic detection function  
+[ ] 1.0.0 - Release Version 1.0.0  
+
+--Future Functions
+[ ] x.x.1 - Advanced Configuration GUI  
+[ ] x.x.2 - Automatic detection function  
+[ ] x.x.3 - Automatic initiation capability  
