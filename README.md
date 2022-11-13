@@ -25,7 +25,7 @@
 --Release--  
 [ ] 1.0.0 - Release Version 1.0.0  
 
---Future Functions
+--Future Functions  
 [ ] x.x.1 - Advanced Configuration GUI  
 [ ] x.x.2 - Automatic detection function  
 [ ] x.x.3 - Automatic initiation capability  
