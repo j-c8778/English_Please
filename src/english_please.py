@@ -27,8 +27,12 @@ Requires the following imports:
 -pyautogui
 -random
 -time
--cv2 (opencv)
 -logging
+
+***Also requires the following dependant packages:
+-pillow
+-pyscreeze
+-cv2 (opencv)
 
 Requires the following files to be present in the same directory as the module.
 -
