@@ -46,11 +46,11 @@ def move_to_1():
     that has an 'i' character in a circle.
     :return: None
     """
-    x_cord = 212
-    y_cord = 829
-    # obj = "./graphics/p1_target_obj.png"
-    # x_cord = find_path(obj)[0]
-    # y_cord = find_path(obj)[1]
+    # x_cord = 212
+    # y_cord = 829
+    obj = "./graphics/p1_target_obj.png"
+    x_cord = (find_path(obj, 0.9)[0]) + 5
+    y_cord = (find_path(obj, 0.9)[1]) + 3
     # movement time in seconds
     delay_base = 0.25
     # degrade of the base delay, a random floating point number
@@ -71,9 +71,9 @@ def move_to_2():
     1 crossing stop sign like icon.
     :return: None
     """
-    obj = "./graphics/p2_target_obj_with_lines.png"
-    x_cord = find_path(obj)[0]
-    y_cord = find_path(obj)[1]
+    obj = "./graphics/p2_target_obj.png"
+    x_cord = find_path(obj, 0.9)[0]
+    y_cord = find_path(obj, 0.9)[1]
     # movement time in seconds
     delay_base = 0.25
     # degrade of the base delay, a random floating point number
@@ -189,7 +189,7 @@ def test_interface():
             print("Waiting")
 
 
-def find_path(obj):
+def find_path(obj, conf):
     """
     This function will locate the coordinates for path 2.
 
@@ -197,7 +197,7 @@ def find_path(obj):
     target x and y coordinates.
     :return: cord (tuple)
     """
-    cord = pyautogui.locateOnScreen(obj, confidence=0.8)
+    cord = pyautogui.locateOnScreen(obj, confidence=conf)
     return cord
 
 
