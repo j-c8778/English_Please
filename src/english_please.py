@@ -70,9 +70,17 @@ def move_to_1():
     delay = delay_base - delay_degrade
     # degrade of the base position, a random int
     pos_degrade = randrange(0, 3)
-    x_cord_f = x_cord - pos_degrade
-    y_cord_f = y_cord - pos_degrade
-    pyautogui.moveTo(x_cord_f, y_cord_f, delay)
+    x_cord_f = None
+    y_cord_f = None
+    try:
+        x_cord_f = x_cord - pos_degrade
+        y_cord_f = y_cord - pos_degrade
+    except TypeError as error:
+        logging.exception(error)
+    try:
+        pyautogui.moveTo(x_cord_f, y_cord_f, delay)
+    except UnboundLocalError as error:
+        logging.exception(error)
 
 
 def move_to_2():
@@ -103,9 +111,17 @@ def move_to_2():
     delay = delay_base - delay_degrade
     # degrade of the base position, a random int
     pos_degrade = randrange(0, 3)
-    x_cord_f = x_cord + 10 - pos_degrade
-    y_cord_f = y_cord + 15 - pos_degrade
-    pyautogui.moveTo(x_cord_f, y_cord_f, delay)
+    x_cord_f = None
+    y_cord_f = None
+    try:
+        x_cord_f = x_cord + 10 - pos_degrade
+        y_cord_f = y_cord + 15 - pos_degrade
+    except TypeError as error:
+        logging.exception(error)
+    try:
+        pyautogui.moveTo(x_cord_f, y_cord_f, delay)
+    except UnboundLocalError as error:
+        logging.exception(error)
 
 
 def move_to_3():
