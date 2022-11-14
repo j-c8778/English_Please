@@ -13,12 +13,13 @@
   
 --Alpha--  
 [x] 0.1.0 - Adds Configuration using JSON file  
-[ ] 0.1.1 - Adds Configuration Interface  
-[ ] 0.1.2 - Adds Full Screen support  
+[ ] 0.1.1 - Adds Configuration Interface using CLI  
+[ ] 0.1.2 - Adds default locations based on screen resolution  
+[ ] 0.1.3 - Adds Full Screen support mode  
   
 --Beta--  
 [ ] 0.2.0 - Executable Release via PyInstaller (tenative based on 0.1.0 testing)  
-[ ] 0.2.1 - Adds hotkey functionality  
+[ ] 0.2.1 - Adds hotkey listener and definition functionality  
 [ ] 0.2.2 - Adds basic GUI for configuration and operation  
 [ ] 0.2.3 - Adds bottom banner function  
   
