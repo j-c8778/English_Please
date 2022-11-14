@@ -12,7 +12,7 @@
 [x] 0.0.5 - Adds exception handling and logging output  
   
 --Alpha--  
-[ ] 0.1.0 - Adds Configuration using JSON file  
+[x] 0.1.0 - Adds Configuration using JSON file  
 [ ] 0.1.1 - Adds Configuration Interface  
 [ ] 0.1.2 - Adds Full Screen support  
   
