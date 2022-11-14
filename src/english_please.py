@@ -28,11 +28,12 @@ Requires the following imports:
 -random
 -time
 -logging
+-json
 
 ***Also requires the following dependant packages:
 -pillow
 -pyscreeze
--cv2 (opencv)
+-cv2 (opencv-python)
 
 Requires the following files to be present in the same directory as the module.
 -
@@ -41,10 +42,11 @@ import random
 from random import randrange
 import time
 import logging
+import json
 import pyautogui
 
 
-def move_to_1():
+def move_to_1(config):
     """
     Method to  move mouse to position 1.
 
@@ -79,9 +81,11 @@ def move_to_1():
     pos_degrade = randrange(0, 3)
     x_cord_f = None
     y_cord_f = None
+    tune_x = config.get_config().get('path_1_x_tune')
+    tune_y = config.get_config().get('path_1_y_tune')
     try:
-        x_cord_f = x_cord + 5 - pos_degrade
-        y_cord_f = y_cord + 3 - pos_degrade
+        x_cord_f = x_cord + tune_x - pos_degrade
+        y_cord_f = y_cord + tune_y - pos_degrade
     except TypeError as error:
         logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
         logging.exception(error)
@@ -92,7 +96,7 @@ def move_to_1():
         logging.exception(error)
 
 
-def move_to_2():
+def move_to_2(config):
     """
     Method to  move mouse to position 2.
 
@@ -125,9 +129,11 @@ def move_to_2():
     pos_degrade = randrange(0, 3)
     x_cord_f = None
     y_cord_f = None
+    tune_x = config.get_config().get('path_2_x_tune')
+    tune_y = config.get_config().get('path_2_y_tune')
     try:
-        x_cord_f = x_cord + 10 - pos_degrade
-        y_cord_f = y_cord + 15 - pos_degrade
+        x_cord_f = x_cord + tune_x - pos_degrade
+        y_cord_f = y_cord + tune_y - pos_degrade
     except TypeError as error:
         logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
         logging.exception(error)
@@ -138,7 +144,7 @@ def move_to_2():
         logging.exception(error)
 
 
-def move_to_3():
+def move_to_3(config):
     """
     Method to  move mouse to position 3.
 
@@ -148,8 +154,8 @@ def move_to_3():
     """
     now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
     error_path = "./error_log" + "_" + now + ".txt"
-    x_cord = 1181
-    y_cord = 628
+    x_cord = config.get_config().get("path_3_x_cord")
+    y_cord = config.get_config().get("path_3_y_cord")
     # movement time in seconds
     delay_base = 0.25
     # degrade of the base delay, a random floating point number
@@ -166,7 +172,7 @@ def move_to_3():
         logging.exception(error)
 
 
-def move_to_4():
+def move_to_4(config):
     """
     Method to move mouse to position 4.
 
@@ -176,8 +182,8 @@ def move_to_4():
     """
     now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
     error_path = "./error_log" + "_" + now + ".txt"
-    x_cord = 1261
-    y_cord = 193
+    x_cord = config.get_config().get("path_4_x_cord")
+    y_cord = config.get_config().get("path_4_y_cord")
     # base movement time in seconds, subject to the delay degrade below
     delay_base = 0.25
     # degrade of the base delay, a random floating point number
@@ -214,32 +220,32 @@ def click_local():
         logging.exception(error)
 
 
-def action():
+def action(config):
     """
     Method to run the sequence.
     :return: None
     """
-    de_pau = 0.025  # default sleep time
-    pyautogui.PAUSE = 0.0025
-    move_to_1()
+    de_pau = config.get_config().get("default_pause")
+    pyautogui.PAUSE = config.get_config().get("py_a_gui_pause")
+    move_to_1(config)
     time.sleep(de_pau)
     click_local()
-    time.sleep(.55)  # path 2 slower to load, longer wait
-    move_to_2()
-    time.sleep(de_pau)
-    click_local()
-    time.sleep(de_pau)
-    move_to_3()
+    time.sleep(config.get_config().get("path_2_pause"))  # path 2 slower to load, longer wait
+    move_to_2(config)
     time.sleep(de_pau)
     click_local()
     time.sleep(de_pau)
-    move_to_4()
+    move_to_3(config)
+    time.sleep(de_pau)
+    click_local()
+    time.sleep(de_pau)
+    move_to_4(config)
     time.sleep(de_pau)
     click_local()
     time.sleep(de_pau)
 
 
-def test_interface():
+def test_interface(config):
     """
     Testing interface for CLI control.
 
@@ -252,7 +258,7 @@ def test_interface():
     while running is True:
         var = input("\nHit 1 to start, 9 to exit.\n")
         if var == "1":
-            action()
+            action(config)
         elif var == "9":
             running = False
         else:
@@ -282,10 +288,38 @@ def find_path(obj, conf):
     return cord
 
 
+def get_config():
+    """
+    Method to get the configuration settings from a json file.
+    :return: config (dict): A dictionary of the overall configuration settings for the program.
+    """
+
+    with open("./config/config.json", 'r', encoding="utf-8") as file:
+        config = json.load(file)
+    return config
+
+
+class Config:
+    """Class to define configuration items in memory."""
+
+    def __init__(self, name, config):
+        self.name = name
+        self.config = config
+
+    def get_name(self):
+        """:return name (str)"""
+        return self.name
+
+    def get_config(self):
+        """:return config (dict)"""
+        return self.config
+
+
 def main():
     """Main Method of the program."""
-    action()
-    # test_interface()
+    config_obj = Config("config", get_config())  # create the config memory object
+    # action(config_obj)
+    test_interface(config_obj)
 
 
 if __name__ == "__main__":
