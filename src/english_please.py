@@ -4,7 +4,7 @@ ___author__ = "Jessie Campbell"
 __copyright__ = "Jessie Campbell"
 __credits__ = ["Jessie Campbell"]
 __license__ = "MIT"
-__version__ = "0.0.5"
+__version__ = "0.1.0"
 __maintainer__ = "Jessie Campbell"
 __email__ = "jessie.t.campbell@gmail.com"
 __status__ = "Alpha"
@@ -63,6 +63,10 @@ def move_to_1(config):
     obj = "./graphics/p1_target_obj.png"
     now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
     error_path = "./error_log" + "_" + now + ".txt"
+    # testing adds******************************************************************************************************
+    pyautogui.moveTo(400, 400)
+    pyautogui.click()
+    # testing adds******************************************************************************************************
     try:
         x_cord = (find_path(obj, 0.9)[0])
         y_cord = (find_path(obj, 0.9)[1])
@@ -319,13 +323,37 @@ class Config:
 
 def main():
     """Main Method of the program."""
-    now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
-    error_path = "./error_log" + "_" + now + ".txt"
+    # now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
+    # error_path = "./error_log" + "_" + now + ".txt"
     try:
         config_obj = Config("config", get_config())  # create the config memory object
-        # action(config_obj)
-        test_interface(config_obj)
+        # this whole section needs to be reworked
+        try:
+            if config_obj.get_config().get("config_required"):
+                action(config_obj) #this needs redoing
+                # print("starting config\n")
+                # print("hover mouse over continue button\n")
+                # input("hit enter when over continue button\n")
+                # p3 = pyautogui.position()
+                # print("hover mouse over x button\n")
+                # input("hit enter when ready")
+                # p4 = pyautogui.position()
+                # print("Path 3 variables: ")
+                # print(p3)
+                # print("Path 4 variables: ")
+                # print(p4)
+                # input("hit enter when you have written those down")
+            if config_obj.get_config().get("config_required") is False:
+                action(config_obj)
+        except Exception as error:
+            now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
+            error_path = "./error_log" + "_" + now + ".txt"
+            logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
+            logging.exception(error)
+        # test_interface(config_obj)
     except Exception as error:
+        now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
+        error_path = "./error_log" + "_" + now + ".txt"
         logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
         logging.exception(error)
 
