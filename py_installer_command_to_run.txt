@@ -1,0 +1,1 @@
+ pyinstaller --add-data ('./graphics;graphics') --add-data ('./config;config') -F english_please.py
