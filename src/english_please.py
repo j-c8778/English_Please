@@ -44,6 +44,8 @@ import time
 import logging
 import json
 import pyautogui
+import PIL  # pylint: disable=unused-import
+import pyscreeze  # pylint: disable=unused-import
 
 
 def move_to_1(config):
@@ -317,9 +319,15 @@ class Config:
 
 def main():
     """Main Method of the program."""
-    config_obj = Config("config", get_config())  # create the config memory object
-    # action(config_obj)
-    test_interface(config_obj)
+    now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
+    error_path = "./error_log" + "_" + now + ".txt"
+    try:
+        config_obj = Config("config", get_config())  # create the config memory object
+        # action(config_obj)
+        test_interface(config_obj)
+    except Exception as error:
+        logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
+        logging.exception(error)
 
 
 if __name__ == "__main__":
