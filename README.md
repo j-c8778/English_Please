@@ -16,7 +16,7 @@
 [ ] 0.1.1 - Adds Configuration Interface using CLI  
 [ ] 0.1.2 - Adds default locations based on screen resolution  
 [ ] 0.1.3 - Adds custom exception handling and improved logging  
-[ ] 0.1.4 - If path 1 or two targets not found, uses default locations and logs custom warning  
+[ ] 0.1.4 - If path 1 or path 2 targets not found, uses default locations and logs custom warning  
 [ ] 0.1.5 - Adds Full Screen support mode  
   
 --Beta--  
