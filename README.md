@@ -18,7 +18,6 @@
 [ ] 0.1.2 - Adds custom exception handling, and improved logging  
 [ ] 0.1.3 - Adds default locations based on screen resolution  
 [ ] 0.1.4 - If path 1 or path 2 targets not found, uses default locations and logs custom warning  
-[ ] 0.1.5 - Polished Executable Release via PyInstaller  
 
 --Beta--  
 [ ] 0.2.0 - Adds hotkey listener and definition functionality  
@@ -27,7 +26,7 @@
 [ ] 0.2.3 - Adds bottom banner function  
   
 --Release--  
-[ ] 1.0.0 - Release Version 1.0.0  
+[ ] 1.0.0 - Release Version 1.0.0, code, files, folders, readme, and instructions polished  
 
 --Future Functions--  
 [ ] x.x.1 - Advanced Configuration GUI  
