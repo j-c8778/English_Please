@@ -23,7 +23,8 @@
 [ ] 0.2.0 - Adds hotkey listener and definition functionality  
 [ ] 0.2.1 - Adds Full Screen support mode  
 [ ] 0.2.2 - Adds basic GUI for configuration and operation  
-[ ] 0.2.3 - Adds bottom banner function  
+[ ] 0.2.3 - Adds input validation and security to config file loading  
+[ ] 0.2.4 - Adds bottom banner function  
   
 --Release--  
 [ ] 1.0.0 - Release Version 1.0.0, code, files, folders, readme, and instructions polished  
