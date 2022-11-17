@@ -335,13 +335,15 @@ class Config:
 
 def main():
     """Main Method of the program."""
-    # now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
-    # error_path = "./error_log" + "_" + now + ".txt"
+    #####################################UNTESTED SECTION##########################################
     try:
         config_obj = Config("config", get_config())  # create the config memory object
         try:
             if config_obj.get_config().get("config_required"):
-                config_cli.menu_print()
+                running = True
+                while running:
+                    usr_input = input(config_cli.menu_print())
+                    config_cli.config_menu_control(usr_input)
         except Exception as error:  # pylint: disable=broad-except  # to do: add custom exception**
             now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
             error_path = "./error_log" + "_" + now + ".txt"
@@ -349,6 +351,8 @@ def main():
             logging.exception(error)
         # action(config_obj)
         # test_interface(config_obj)
+    #####################################UNTESTED SECTION##########################################
+
     except Exception as error:  # pylint: disable=broad-except  # to do: add custom exception******
         now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
         error_path = "./error_log" + "_" + now + ".txt"

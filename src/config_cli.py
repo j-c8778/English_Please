@@ -9,9 +9,10 @@ __maintainer__ = "Jessie Campbell"
 __email__ = "jessie.t.campbell@gmail.com"
 __status__ = "Alpha"
 
-Module that runs the configuration update CLI for the english_please.py module.
+Module that contains functions to run the configuration update CLI for the english_please.py module.
 
 Uses the following functions:
+*menu_print - Function to print the configuration menu
 *config_menu_control - Function to control which case gets called.
 *case_1 - Function to 1 logic for screen resolution updating
 *case_2 - Function to run case 2 logic to update path targets
@@ -19,7 +20,6 @@ Uses the following functions:
 *case_4
 *case_5
 *case_6
-*menu_print
 
 Requires the following imports:
 -time
@@ -30,11 +30,24 @@ import json
 import time
 
 
+def menu_print():
+    """Function to print the options menu"""
+
+    print("Welcome to the English Please Configuration Menu\n"
+          "Please enter the number for your desired selection, then press enter:\n"
+          "\n1) Change your current resolution setting.\n"
+          "2) Change your tuning settings.\n"
+          "3) Change the pause times.\n"
+          "4) Change the path 3 and/or path 4 target locations.\n"
+          "5) Change the current screen resolution.\n"
+          "6) Reset to default configuration settings.\n"
+          "9) Exit the configuration menu.")
+
+
 def config_menu_control(mode):
     """Function to control the Configuration Menu
     :arguments mode (str): desired case from menu_print().
     """
-
     match mode:
         case "1":  # Change your current resolution setting.
             case_1()
@@ -51,6 +64,7 @@ def config_menu_control(mode):
         case "9":  # exit case
             print("Thank you, goodbye.")
             time.sleep(0.75)
+            return False
         case _:  # default to catch invalid choices
             print("Invalid Choice, please try again.\n")
 
@@ -140,18 +154,3 @@ def case_5():
 
 def case_6():
     """ -docstring- """
-
-
-def menu_print():
-    """Function to print the options menu"""
-
-    print("Welcome to the English Please Configuration Menu\n"
-          "Please enter the number for your desired selection, then press enter:\n"
-          "\n1) Change your current resolution setting.\n"
-          "2) Change your tuning settings.\n"
-          "3) Change the pause times.\n"
-          "4) Change the path 3 and/or path 4 target locations.\n"
-          "5) Change the current screen resolution.\n"
-          "6) Reset to default configuration settings.\n"
-          "9) Exit the configuration menu.")
-
