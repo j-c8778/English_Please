@@ -22,6 +22,10 @@ Uses the following functions:
 *click - Clicks the mouse on call, with random delay.
 *action - Runs the sequence of events.
 *find_path - Finds the end point to aim of the specified location.
+*get_config - Function to locate and serialize config json.
+
+Defines the following classes:
+*Config - In memory storage of active configuration settings.
 
 Requires the following imports:
 -pyautogui
@@ -29,6 +33,7 @@ Requires the following imports:
 -time
 -logging
 -json
+-import config_cli
 
 ***Also requires the following dependant packages:
 -pillow
@@ -36,7 +41,9 @@ Requires the following imports:
 -cv2 (opencv-python)
 
 Requires the following files to be present in the same directory as the module.
--
+- config - Folder with the config.json file
+- graphics - Folder with the p1_target_obj.png and p2_target_obj.png files
+- config_cli.py - Module to run the configuration tool
 """
 import random
 from random import randrange
@@ -44,8 +51,12 @@ import time
 import logging
 import json
 import pyautogui
+# the following are added to support PyInstaller
+# noinspection PyUnresolvedReferences
 import PIL  # pylint: disable=unused-import
+# noinspection PyUnresolvedReferences
 import pyscreeze  # pylint: disable=unused-import
+import config_cli
 
 
 def move_to_1(config):
@@ -63,10 +74,11 @@ def move_to_1(config):
     obj = "./graphics/p1_target_obj.png"
     now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
     error_path = "./error_log" + "_" + now + ".txt"
-    # testing adds******************************************************************************************************
+    # testing adds*********************************************************************************
+    # might need to incorporate this in a try block
     pyautogui.moveTo(400, 400)
     pyautogui.click()
-    # testing adds******************************************************************************************************
+    # testing adds*********************************************************************************
     try:
         x_cord = (find_path(obj, 0.9)[0])
         y_cord = (find_path(obj, 0.9)[1])
@@ -327,31 +339,32 @@ def main():
     # error_path = "./error_log" + "_" + now + ".txt"
     try:
         config_obj = Config("config", get_config())  # create the config memory object
+        action(config_obj)
         # this whole section needs to be reworked
-        try:
-            if config_obj.get_config().get("config_required"):
-                action(config_obj) #this needs redoing
-                # print("starting config\n")
-                # print("hover mouse over continue button\n")
-                # input("hit enter when over continue button\n")
-                # p3 = pyautogui.position()
-                # print("hover mouse over x button\n")
-                # input("hit enter when ready")
-                # p4 = pyautogui.position()
-                # print("Path 3 variables: ")
-                # print(p3)
-                # print("Path 4 variables: ")
-                # print(p4)
-                # input("hit enter when you have written those down")
-            if config_obj.get_config().get("config_required") is False:
-                action(config_obj)
-        except Exception as error:
-            now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
-            error_path = "./error_log" + "_" + now + ".txt"
-            logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-            logging.exception(error)
+        # try:
+        #     if config_obj.get_config().get("config_required"):
+        #         action(config_obj)
+        #         print("starting config\n")
+        #         print("hover mouse over continue button\n")
+        #         input("hit enter when over continue button\n")
+        #         p3 = pyautogui.position()
+        #         print("hover mouse over x button\n")
+        #         input("hit enter when ready")
+        #         p4 = pyautogui.position()
+        #         print("Path 3 variables: ")
+        #         print(p3)
+        #         print("Path 4 variables: ")
+        #         print(p4)
+        #         input("hit enter when you have written those down")
+        #     if config_obj.get_config().get("config_required") is False:
+        #         action(config_obj)
+        # except Exception as error:  # pylint: disable=broad-except  # to do: add custom exception**
+        #     now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
+        #     error_path = "./error_log" + "_" + now + ".txt"
+        #     logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
+        #     logging.exception(error)
         # test_interface(config_obj)
-    except Exception as error:
+    except Exception as error:  # pylint: disable=broad-except  # to do: add custom exception******
         now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
         error_path = "./error_log" + "_" + now + ".txt"
         logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)

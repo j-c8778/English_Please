@@ -25,12 +25,7 @@ Requires the following imports:
 -time
 -logging
 -json
-
-Requires the following files to be present in the same directory as the module.
-- config - Folder with the config.json file
-- graphics - Folder with the p1_target_obj.png and p2_target_obj.png files
 """
-
 import json
 import time
 
