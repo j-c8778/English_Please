@@ -339,30 +339,15 @@ def main():
     # error_path = "./error_log" + "_" + now + ".txt"
     try:
         config_obj = Config("config", get_config())  # create the config memory object
-        action(config_obj)
-        # this whole section needs to be reworked
-        # try:
-        #     if config_obj.get_config().get("config_required"):
-        #         action(config_obj)
-        #         print("starting config\n")
-        #         print("hover mouse over continue button\n")
-        #         input("hit enter when over continue button\n")
-        #         p3 = pyautogui.position()
-        #         print("hover mouse over x button\n")
-        #         input("hit enter when ready")
-        #         p4 = pyautogui.position()
-        #         print("Path 3 variables: ")
-        #         print(p3)
-        #         print("Path 4 variables: ")
-        #         print(p4)
-        #         input("hit enter when you have written those down")
-        #     if config_obj.get_config().get("config_required") is False:
-        #         action(config_obj)
-        # except Exception as error:  # pylint: disable=broad-except  # to do: add custom exception**
-        #     now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
-        #     error_path = "./error_log" + "_" + now + ".txt"
-        #     logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-        #     logging.exception(error)
+        try:
+            if config_obj.get_config().get("config_required"):
+                config_cli.menu_print()
+        except Exception as error:  # pylint: disable=broad-except  # to do: add custom exception**
+            now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
+            error_path = "./error_log" + "_" + now + ".txt"
+            logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
+            logging.exception(error)
+        # action(config_obj)
         # test_interface(config_obj)
     except Exception as error:  # pylint: disable=broad-except  # to do: add custom exception******
         now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
