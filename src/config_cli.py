@@ -160,5 +160,3 @@ def menu_print():
           "6) Reset to default configuration settings.\n"
           "9) Exit the configuration menu.")
 
-
-menu_print()
