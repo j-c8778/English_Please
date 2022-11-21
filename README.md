@@ -1,7 +1,7 @@
 # English_Please  
 
 ## This script is intended to move the mouse on the primary monitor to some specified locations, click once at each location while on a certain website, and repeat as necessary from a hotkey trigger.  
-#### The main target of these commands is a specific class of items that should be in English based on settings, but are not.
+#### The main target of these commands is a specific class of items that should be in English based on the settings when accessing a free site while logging in, but are not. I do not reccomend using this function if your settings are presenting the correct type of item this is targeted at.
 
 ### Build Path:  
   
