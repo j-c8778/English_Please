@@ -4,7 +4,7 @@ ___author__ = "Jessie Campbell"
 __copyright__ = "Jessie Campbell"
 __credits__ = ["Jessie Campbell"]
 __license__ = "MIT"
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __maintainer__ = "Jessie Campbell"
 __email__ = "jessie.t.campbell@gmail.com"
 __status__ = "Alpha"
@@ -51,11 +51,12 @@ import time
 import logging
 import json
 import pyautogui
-# the following are added to support PyInstaller
+# the following are added to support PyInstaller builds
 # noinspection PyUnresolvedReferences
 import PIL  # pylint: disable=unused-import
 # noinspection PyUnresolvedReferences
 import pyscreeze  # pylint: disable=unused-import
+# the following are custom modules related to this project
 import config_cli
 
 
@@ -74,11 +75,11 @@ def move_to_1(config):
     obj = "./graphics/p1_target_obj.png"
     now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
     error_path = "./error_log" + "_" + now + ".txt"
-    # testing adds*********************************************************************************
+    # testing adds********************************** need to find out if this is always necessary
     # might need to incorporate this in a try block
     pyautogui.moveTo(400, 400)
     pyautogui.click()
-    # testing adds*********************************************************************************
+    # testing adds********************************** suspect it is due to loading delay in exe mode
     try:
         x_cord = (find_path(obj, 0.9)[0])
         y_cord = (find_path(obj, 0.9)[1])
@@ -359,14 +360,11 @@ class Config:
 
 def main():
     """Main Method of the program."""
-    #####################################UNTESTED SECTION##########################################
     try:
         config_me()
         config_obj = Config("config", get_config())  # create the config memory object
         # action(config_obj)
         # test_interface(config_obj)
-    #####################################UNTESTED SECTION##########################################
-
     except Exception as error:  # pylint: disable=broad-except  # to do: add custom exception******
         now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
         error_path = "./error_log" + "_" + now + ".txt"
