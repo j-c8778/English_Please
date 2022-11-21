@@ -23,9 +23,9 @@
 --Beta--  
 [ ] 0.2.0 - Adds hotkey listener and hotkey definition functionality  
 [ ] 0.2.1 - Allows for re-running configuration menu  
-[ ] 0.2.2 - Adds Full Screen support mode  
-[ ] 0.2.3 - Adds basic GUI for configuration control, and operation  
-[ ] 0.2.4 - Adds input validation and security to config file loading  
+[ ] 0.2.2 - Adds basic GUI for configuration control, and operation  
+[ ] 0.2.3 - Adds input validation and security to config file loading  
+[ ] 0.2.4 - Adds Full Screen support mode  
 [ ] 0.2.5 - Adds bottom banner function  
   
 --Release--  
