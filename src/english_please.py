@@ -311,10 +311,34 @@ def get_config():
     Method to get the configuration settings from a json file.
     :return: config (dict): A dictionary of the overall configuration settings for the program.
     """
-
     with open("./config/config.json", 'r', encoding="utf-8") as file:
         config = json.load(file)
     return config
+
+
+def config_me():
+    """Function to run the config option"""
+    try:
+        config_obj = Config("config", get_config())  # create the config memory object
+        if config_obj.get_config().get("config_required"):
+            print("Running Initial Configuration.")
+            running = True
+            while running:
+                config_cli.menu_print()
+                usr_input = input("Type your selection and press enter.\n")
+                config_cli.config_menu_control(usr_input)
+                if not config_cli.config_menu_control(usr_input):
+                    print("Exiting Config Menu.\n")
+                    print("Setting Config Status to not required.")
+                    with open("./config/config.json", 'r', encoding="utf-8") as file:
+                        data = json.load(file)
+                        data["config_required"] = False
+                    with open("./config/config.json", 'w', encoding="utf-8") as file:
+                        json.dump(data, file, indent=4)
+                    time.sleep(3)
+                    running = False
+    except FileNotFoundError:  # Add error handling later
+        print("Config file not found, recopy from repo.")
 
 
 class Config:
@@ -337,18 +361,8 @@ def main():
     """Main Method of the program."""
     #####################################UNTESTED SECTION##########################################
     try:
+        config_me()
         config_obj = Config("config", get_config())  # create the config memory object
-        try:
-            if config_obj.get_config().get("config_required"):
-                running = True
-                while running:
-                    usr_input = input(config_cli.menu_print())
-                    config_cli.config_menu_control(usr_input)
-        except Exception as error:  # pylint: disable=broad-except  # to do: add custom exception**
-            now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
-            error_path = "./error_log" + "_" + now + ".txt"
-            logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-            logging.exception(error)
         # action(config_obj)
         # test_interface(config_obj)
     #####################################UNTESTED SECTION##########################################
