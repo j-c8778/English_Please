@@ -22,13 +22,11 @@ Uses the following functions:
 *case_6 - Function to reset to default configuration settings
 
 Requires the following imports:
--time
 -logging
 -json
 -pyautogui
 """
 import json
-import time
 import pyautogui
 
 
@@ -43,7 +41,9 @@ def menu_print():
           "4) Change the path 3 and/or path 4 target locations.\n"
           "5) Update the current screen resolution.\n"
           "6) Reset to default configuration settings.\n"
-          "9) Exit the configuration menu.")
+          "9) Exit the configuration menu"
+          " (sets config status to False, manual reset only"
+          " in the json file until future revision).")
 
 
 def config_menu_control(mode):
