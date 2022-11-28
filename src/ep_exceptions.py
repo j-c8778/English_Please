@@ -1,5 +1,5 @@
 """
-__filename__ = "english_please.py"
+__filename__ = "ep_exceptions.py"
 ___author__ = "Jessie Campbell"
 __copyright__ = "Jessie Campbell"
 __credits__ = ["Jessie Campbell"]
@@ -30,6 +30,10 @@ Requires the following files to be present in the same directory as the module.
 """
 import time
 import logging
+
+
+class EnglishPleaseException(Exception):
+    """ If custom exception not caught, this will be called."""
 
 
 class PathLockError(Exception):

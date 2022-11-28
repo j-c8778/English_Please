@@ -373,7 +373,7 @@ def main():
         config_obj = Config("config", get_config())  # create the config memory object
         action(config_obj)
         # test_interface(config_obj)
-    except Exception as error:  # pylint: disable=broad-except  # to do: add custom exception******
+    except errors.EnglishPleaseException as error:  # pylint: disable=broad-except  # to do: add custom exception******
         print(error)  # to do - custom logging to catch this situation
 
 
