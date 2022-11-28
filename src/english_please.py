@@ -23,6 +23,7 @@ Uses the following functions:
 *action - Runs the sequence of events.
 *find_path - Finds the end point to aim of the specified location.
 *get_config - Function to locate and serialize config json.
+*config_me - Function to run the config option logic.
 
 Defines the following classes:
 *Config - In memory storage of active configuration settings.
@@ -41,9 +42,11 @@ Requires the following imports:
 -cv2 (opencv-python)
 
 Requires the following files to be present in the same directory as the module.
-- config - Folder with the config.json file
-- graphics - Folder with the p1_target_obj.png and p2_target_obj.png files
-- config_cli.py - Module to run the configuration tool
+- config - Folder with the config.json file.
+- graphics - Folder with the p1_target_obj.png and p2_target_obj.png files.
+- logs - Folder to contain logged info
+- config_cli.py - Module to run the configuration tool.
+- ep_exceptions.py - Module with custom exceptions.
 """
 import random
 from random import randrange
@@ -58,6 +61,7 @@ import PIL  # pylint: disable=unused-import
 import pyscreeze  # pylint: disable=unused-import
 # the following are custom modules related to this project
 import config_cli
+import ep_exceptions as errors
 
 
 def move_to_1(config):
@@ -68,29 +72,28 @@ def move_to_1(config):
     that has an 'i' character in a circle.
     :return: None
     """
-    # x_cord = 212
-    # y_cord = 829
+    path_name = "Target 1"  # name of the path, used for execution logging
     x_cord = None
     y_cord = None
+    waited = False
+    control = 0  # flag variable if exception passed set to 1 before exception logging
     obj = "./graphics/p1_target_obj.png"
-    now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
-    error_path = "./error_log" + "_" + now + ".txt"
     # testing adds********************************** need to find out if this is always necessary
     # might need to incorporate this in a try block
     pyautogui.moveTo(400, 400)
     pyautogui.click()
-    # testing adds********************************** suspect it is due to loading delay in exe mode
+    # testing adds******************************** suspect it is due to a loading delay in exe mode
     try:
-        x_cord = (find_path(obj, 0.9)[0])
-        y_cord = (find_path(obj, 0.9)[1])
-    except TypeError:
-        try:
+        cord = (find_path(obj, 0.9))
+        if cord is None:
             time.sleep(0.5)
-            x_cord = (find_path(obj, 0.9)[0])
-            y_cord = (find_path(obj, 0.9)[1])
-        except TypeError as error:
-            logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-            logging.exception(error)
+            waited = True
+            cord = (find_path(obj, 0.9))
+        x_cord = cord[0]
+        y_cord = cord[1]
+    except TypeError:
+        control = 1  # set flag value to 1 to skip cord_f errors
+        errors.PathLockError(path_name, waited)
     # movement time in seconds
     delay_base = 0.25
     # degrade of the base delay, a random floating point number
@@ -98,21 +101,21 @@ def move_to_1(config):
     delay = delay_base - delay_degrade
     # degrade of the base position, a random int
     pos_degrade = randrange(0, 3)
-    x_cord_f = None
-    y_cord_f = None
     tune_x = config.get_config().get('path_1_x_tune')
     tune_y = config.get_config().get('path_1_y_tune')
     try:
-        x_cord_f = x_cord + tune_x - pos_degrade
-        y_cord_f = y_cord + tune_y - pos_degrade
-    except TypeError as error:
-        logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-        logging.exception(error)
+        if control == 1:
+            pass
+        else:
+            x_cord = x_cord + tune_x - pos_degrade
+            y_cord = y_cord + tune_y - pos_degrade
+    except TypeError:
+        path_name = path_name + " Final"
+        errors.PathLockError(path_name, waited)
     try:
-        pyautogui.moveTo(x_cord_f, y_cord_f, delay)
-    except UnboundLocalError as error:
-        logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-        logging.exception(error)
+        pyautogui.moveTo(x_cord, y_cord, delay)
+    except UnboundLocalError:
+        errors.EPUnbound(path_name)
 
 
 def move_to_2(config):
@@ -123,22 +126,23 @@ def move_to_2(config):
     1 crossing stop sign like icon.
     :return: None
     """
+    path_name = "Target 2"  # name of the path, used for execution logging
     x_cord = None
     y_cord = None
+    control = 0  # flag variable if exception passed set to 1 before exception logging
+    waited = False
     obj = "./graphics/p2_target_obj.png"
-    now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
-    error_path = "./error_log" + "_" + now + ".txt"
     try:
-        x_cord = find_path(obj, 0.9)[0]
-        y_cord = find_path(obj, 0.9)[1]
-    except TypeError:
-        try:
+        cord = (find_path(obj, 0.9))
+        if cord is None:
             time.sleep(0.5)
-            x_cord = find_path(obj, 0.9)[0]
-            y_cord = find_path(obj, 0.9)[1]
-        except TypeError as error:
-            logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-            logging.exception(error)
+            waited = True
+            cord = (find_path(obj, 0.9))
+        x_cord = cord[0]
+        y_cord = cord[1]
+    except TypeError:
+        control = 1  # set flag value to 1 to skip cord_f errors
+        errors.PathLockError(path_name, waited)
     # movement time in seconds
     delay_base = 0.25
     # degrade of the base delay, a random floating point number
@@ -146,21 +150,21 @@ def move_to_2(config):
     delay = delay_base - delay_degrade
     # degrade of the base position, a random int
     pos_degrade = randrange(0, 3)
-    x_cord_f = None
-    y_cord_f = None
     tune_x = config.get_config().get('path_2_x_tune')
     tune_y = config.get_config().get('path_2_y_tune')
     try:
-        x_cord_f = x_cord + tune_x - pos_degrade
-        y_cord_f = y_cord + tune_y - pos_degrade
-    except TypeError as error:
-        logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-        logging.exception(error)
+        if control == 1:
+            pass
+        else:
+            x_cord = x_cord + tune_x - pos_degrade
+            y_cord = y_cord + tune_y - pos_degrade
+    except TypeError:
+        path_name = path_name + " Final"
+        errors.PathLockError(path_name, waited)
     try:
-        pyautogui.moveTo(x_cord_f, y_cord_f, delay)
-    except UnboundLocalError as error:
-        logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-        logging.exception(error)
+        pyautogui.moveTo(x_cord, y_cord, delay)
+    except UnboundLocalError:
+        errors.EPUnbound(path_name)
 
 
 def move_to_3(config):
@@ -171,6 +175,7 @@ def move_to_3(config):
     "continue".
     :return: None
     """
+    path_name = "Target 3"  # name of the path, used for execution logging
     now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
     error_path = "./error_log" + "_" + now + ".txt"
     x_cord = config.get_config().get("path_3_x_cord")
@@ -199,6 +204,7 @@ def move_to_4(config):
     of the script.
     :return: None
     """
+    path_name = "Target 4"  # name of the path, used for execution logging
     now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
     error_path = "./error_log" + "_" + now + ".txt"
     x_cord = config.get_config().get("path_4_x_cord")
@@ -318,7 +324,7 @@ def get_config():
 
 
 def config_me():
-    """Function to run the config option"""
+    """Function to run the config option logic"""
     try:
         config_obj = Config("config", get_config())  # create the config memory object
         if config_obj.get_config().get("config_required"):
@@ -360,16 +366,15 @@ class Config:
 
 def main():
     """Main Method of the program."""
+    # config_obj = Config("config", get_config())  # create the config memory object
+    # action(config_obj)
     try:
-        config_me()
+        # config_me()
         config_obj = Config("config", get_config())  # create the config memory object
-        # action(config_obj)
+        action(config_obj)
         # test_interface(config_obj)
     except Exception as error:  # pylint: disable=broad-except  # to do: add custom exception******
-        now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
-        error_path = "./error_log" + "_" + now + ".txt"
-        logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-        logging.exception(error)
+        print(error)  # to do - custom logging to catch this situation
 
 
 if __name__ == "__main__":
