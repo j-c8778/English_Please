@@ -18,7 +18,7 @@
 [ ] 0.1.2 - Adds custom exception handling, and improved logging with custom exceptions and txt file output  
 [ ] 0.1.3 - Converts path methods from 4 individual methods to a single method with 2 arguments vice 1 argument  
 [ ] 0.1.4 - Adds default locations based on screen resolution  
-[ ] 0.1.5 - If path 1 or path 2 targets not found, uses default locations based on screen resolution, adds log cleanup  
+[ ] 0.1.5 - If path 1 or path 2 targets not found, uses default locations based on screen resolution  
 
 --Beta--  
 [ ] 0.2.0 - Adds hotkey listener and hotkey definition functionality  
@@ -28,7 +28,7 @@
 [ ] 0.2.4 - Adds full screen mode  
 
 --Release--  
-[ ] 1.0.0 - Release Version. Code, files, folders, readme, and instructions polished  
+[ ] 1.0.0 - Release Version. Code, files, folders, readme, and instructions polished, adds log cleanup    
 
 --Future Functions--  
 [ ] x.x.1 - Advanced Configuration GUI  
