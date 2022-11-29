@@ -51,15 +51,16 @@ Requires the following files to be present in the same directory as the module.
 import random
 from random import randrange
 import time
-import logging
 import json
-import pyautogui
 # the following are added to support PyInstaller builds
+# noinspection PyUnresolvedReferences
+import logging  # pylint: disable=unused-import
 # noinspection PyUnresolvedReferences
 import PIL  # pylint: disable=unused-import
 # noinspection PyUnresolvedReferences
 import pyscreeze  # pylint: disable=unused-import
 # the following are custom modules related to this project
+import pyautogui
 import config_cli
 import ep_exceptions as errors
 
@@ -176,8 +177,6 @@ def move_to_3(config):
     :return: None
     """
     path_name = "Target 3"  # name of the path, used for execution logging
-    now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
-    error_path = "./error_log" + "_" + now + ".txt"
     x_cord = config.get_config().get("path_3_x_cord")
     y_cord = config.get_config().get("path_3_y_cord")
     # movement time in seconds
@@ -187,13 +186,12 @@ def move_to_3(config):
     delay = delay_base - delay_degrade
     # degrade of the base position, a random int
     pos_degrade = randrange(0, 3)
-    x_cord_f = x_cord - pos_degrade
-    y_cord_f = y_cord - pos_degrade
+    x_cord = x_cord - pos_degrade
+    y_cord = y_cord - pos_degrade
     try:
-        pyautogui.moveTo(x_cord_f, y_cord_f, delay)
+        pyautogui.moveTo(x_cord, y_cord, delay)
     except pyautogui.PyAutoGUIException as error:
-        logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-        logging.exception(error)
+        errors.EPPyAutoGUILogError(path_name, error)
 
 
 def move_to_4(config):
@@ -205,8 +203,6 @@ def move_to_4(config):
     :return: None
     """
     path_name = "Target 4"  # name of the path, used for execution logging
-    now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
-    error_path = "./error_log" + "_" + now + ".txt"
     x_cord = config.get_config().get("path_4_x_cord")
     y_cord = config.get_config().get("path_4_y_cord")
     # base movement time in seconds, subject to the delay degrade below
@@ -216,22 +212,20 @@ def move_to_4(config):
     delay = delay_base - delay_degrade
     # degrade of the base position, a random int
     pos_degrade = randrange(0, 3)
-    x_cord_f = x_cord - pos_degrade
-    y_cord_f = y_cord - pos_degrade
+    x_cord = x_cord - pos_degrade
+    y_cord = y_cord - pos_degrade
     try:
-        pyautogui.moveTo(x_cord_f, y_cord_f, delay)
+        pyautogui.moveTo(x_cord, y_cord, delay)
     except pyautogui.PyAutoGUIException as error:
-        logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-        logging.exception(error)
+        errors.EPPyAutoGUILogError(path_name, error)
 
 
 def click_local():
     """
-    Method to click the mouse when at the required location.
+    Method to click the mouse when at the required location using delays.
     :return: None
     """
-    now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
-    error_path = "./error_log" + "_" + now + ".txt"
+    path_name = "local click function"
     # base movement time in seconds, subject to the delay degrade below
     delay_base = 0.05
     # degrade of the base delay, a random floating point number
@@ -241,8 +235,7 @@ def click_local():
     try:
         pyautogui.click()
     except pyautogui.PyAutoGUIException as error:
-        logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-        logging.exception(error)
+        errors.EPPyAutoGUILogError(path_name, error)
 
 
 def action(config):
@@ -297,34 +290,36 @@ def find_path(obj, conf):
 
     This function calls the locate function from pyautogui, and returns the location of the
     target x and y coordinates.
-    :return: cord (tuple)
+    :return: cord (tuple): the tuple of the x and y cord of the target object
     """
-    now = time.strftime("%a,%d%b%Y_%H_%M_%S", time.localtime())
-    error_path = "./error_log" + "_" + now + ".txt"
+    path_name = "local find function"
     cord = None
     try:
         cord = pyautogui.locateOnScreen(obj, confidence=conf)
-    except pyautogui.ImageNotFoundException as error:
-        logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-        logging.debug(error)
-    except pyautogui.PyAutoGUIException as error:
-        logging.basicConfig(filename=error_path, encoding="utf-8", level=logging.DEBUG)
-        logging.exception(error)
+    except (pyautogui.ImageNotFoundException, pyautogui.PyAutoGUIException) as error:
+        errors.EPPyAutoGUILogError(path_name, error)
     return cord
 
 
 def get_config():
     """
     Method to get the configuration settings from a json file.
-    :return: config (dict): A dictionary of the overall configuration settings for the program.
+    :return: config (dict): A dictionary of the overall configuration settings for the program
     """
-    with open("./config/config.json", 'r', encoding="utf-8") as file:
-        config = json.load(file)
-    return config
+    try:
+        with open("./config/config.json", 'r', encoding="utf-8") as file:
+            config = json.load(file)
+            return config
+    except FileNotFoundError as error:
+        errors.EnglishPleaseException(error)
+        return None
 
 
 def config_me():
-    """Function to run the config option logic"""
+    """
+    Function to run the config option logic
+    :return: None
+    """
     try:
         config_obj = Config("config", get_config())  # create the config memory object
         if config_obj.get_config().get("config_required"):
@@ -344,23 +339,26 @@ def config_me():
                         json.dump(data, file, indent=4)
                     time.sleep(3)
                     running = False
-    except FileNotFoundError:  # Add error handling later
-        print("Config file not found, recopy from repo.")
+    except (FileNotFoundError, AttributeError) as error:
+        errors.EnglishPleaseException(error)
 
 
 class Config:
-    """Class to define configuration items in memory."""
+    """
+    Class to define configuration items in memory.
+    :return: None
+    """
 
     def __init__(self, name, config):
         self.name = name
         self.config = config
 
     def get_name(self):
-        """:return name (str)"""
+        """:return name (str): the name of the class"""
         return self.name
 
     def get_config(self):
-        """:return config (dict)"""
+        """:return config (dict): the config json dict of the class"""
         return self.config
 
 
@@ -373,8 +371,8 @@ def main():
         config_obj = Config("config", get_config())  # create the config memory object
         action(config_obj)
         # test_interface(config_obj)
-    except errors.EnglishPleaseException as error:  # pylint: disable=broad-except  # to do: add custom exception******
-        print(error)  # to do - custom logging to catch this situation
+    except errors.EnglishPleaseException as error:
+        errors.EnglishPleaseException(error)
 
 
 if __name__ == "__main__":

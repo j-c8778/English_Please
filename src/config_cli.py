@@ -12,22 +12,23 @@ __status__ = "Alpha"
 Module that contains functions to run the configuration update CLI for the english_please.py module.
 
 Uses the following functions:
-*menu_print - Function to print the configuration menu
+*menu_print - Function to print the configuration menu.
 *config_menu_control - Function to control which case gets called.
-*case_1 - Function to update full screen mode
-*case_2 - Function to run case 2 logic to update path targets
-*case_3 - Function to run case 3 logic to update pause times
-*case_4 - Function to change the path 3 and/or path 4 target locations
-*case_5 - Function to update the current screen resolution in the config file
-*case_6 - Function to reset to default configuration settings
+*case_1 - Function to update full screen mode.
+*case_2 - Function to run case 2 logic to update path targets.
+*case_3 - Function to run case 3 logic to update pause times.
+*case_4 - Function to change the path 3 and/or path 4 target locations.
+*case_5 - Function to update the current screen resolution in the config file.
+*case_6 - Function to reset to default configuration settings.
 
 Requires the following imports:
--logging
 -json
 -pyautogui
+-ep_exceptions
 """
 import json
 import pyautogui
+import ep_exceptions
 
 
 def menu_print():
@@ -48,7 +49,7 @@ def menu_print():
 
 def config_menu_control(mode):
     """Function to control the Configuration Menu
-    :arguments mode (str): desired case from menu_print().
+    :arguments mode (str): desired case from menu_print()
     """
     match mode:
         case "1":  # Enable/Disable full screen mode.
