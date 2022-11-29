@@ -15,10 +15,10 @@
 --Alpha--  
 [x] 0.1.0 - Adds Configuration using JSON file, first .exe version using PyInstaller  
 [x] 0.1.1 - Adds initial Configuration Interface using CLI  
-[ ] 0.1.2 - Adds custom exception handling, and improved logging  
+[ ] 0.1.2 - Adds custom exception handling, and improved logging with custom exceptions  
 [ ] 0.1.3 - Converts path methods from 4 individual methods to a single method with 2 arguments vice 1 argument  
 [ ] 0.1.4 - Adds default locations based on screen resolution  
-[ ] 0.1.5 - If path 1 or path 2 targets not found, uses default locations based on screen resolution, and logs custom warning  
+[ ] 0.1.5 - If path 1 or path 2 targets not found, uses default locations based on screen resolution, adds log cleanup  
 
 --Beta--  
 [ ] 0.2.0 - Adds hotkey listener and hotkey definition functionality  
