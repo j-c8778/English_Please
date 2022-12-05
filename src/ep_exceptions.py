@@ -4,7 +4,7 @@ ___author__ = "Jessie Campbell"
 __copyright__ = "Jessie Campbell"
 __credits__ = ["Jessie Campbell"]
 __license__ = "MIT"
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 __maintainer__ = "Jessie Campbell"
 __email__ = "jessie.t.campbell@gmail.com"
 __status__ = "Alpha"
@@ -57,7 +57,7 @@ class EnglishPleaseException(Exception):
         error_path = "./logs/english_please_error_log.txt"
         logging.basicConfig(filename=error_path, filemode="a",
                             encoding="utf-8", level=logging.DEBUG, force=True)
-        logging.log(logging.INFO, self.error_output(), stack_info=False)
+        logging.log(logging.INFO, self.error_output(), stack_info=True)
 
 
 class PathLockError(Exception):
@@ -107,6 +107,31 @@ class EPUnbound(Exception):
     def print_error(self):
         """method to print the error to the output txt file"""
         error_path = "./logs/path_error_log.txt"
+        logging.basicConfig(filename=error_path, filemode="a",
+                            encoding="utf-8", level=logging.DEBUG, force=True)
+        logging.log(logging.INFO, self.error_output(), stack_info=True)
+
+
+class EPConfigError(Exception):
+    """
+    Custom exception to catch and log errors.
+
+    :argument error (obj): the error that occurred
+    """
+    now = time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime())
+
+    def __init__(self, error, e_time=now):
+        self.error = error
+        self.e_time = e_time
+        self.print_error()
+
+    def error_output(self):
+        """method to construct the output string"""
+        return f'{self.error} at {self.e_time}.'
+
+    def print_error(self):
+        """method to print the error to the output txt file"""
+        error_path = "./logs/ep_config_error_log.txt"
         logging.basicConfig(filename=error_path, filemode="a",
                             encoding="utf-8", level=logging.DEBUG, force=True)
         logging.log(logging.INFO, self.error_output(), stack_info=False)

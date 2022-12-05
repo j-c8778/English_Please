@@ -4,7 +4,7 @@ ___author__ = "Jessie Campbell"
 __copyright__ = "Jessie Campbell"
 __credits__ = ["Jessie Campbell"]
 __license__ = "MIT"
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 __maintainer__ = "Jessie Campbell"
 __email__ = "jessie.t.campbell@gmail.com"
 __status__ = "Alpha"
@@ -28,7 +28,7 @@ Requires the following imports:
 """
 import json
 import pyautogui
-import ep_exceptions
+import ep_exceptions as errors
 
 
 def menu_print():
@@ -98,11 +98,12 @@ def case_2():
                         data['path_1_y_tune'] = new_y
                     with open("./config/config.json", 'r', encoding="utf-8") as file:
                         json.dump(data, file, indent=4)
-                except FileNotFoundError:
-                    print("Config file not found, recopy from repo.")
-        except TypeError:  # add error handling later
+                except FileNotFoundError as error:
+                    errors.EPConfigError(error)
+                    print("Config file not found, recopy from repo, or contact Author.")
+        except TypeError:
             print("Error, you must only enter a number 0-9999")
-    except TypeError:  # add error handling later
+    except TypeError:
         print("Error, only numbers 1-5 are acceptable inputs")
 
 
@@ -127,8 +128,8 @@ def case_3():
                         print("you must enter a number value 1-10")
                         new_pause = input(f"Enter the new pause time for path {pause_sel},"
                                           f" then press enter:")
-                except TypeError:  # add error handling later
-                    print("Invalid Entry.")
+                except TypeError:
+                    print("Invalid Entry, numbers 1-10 only.")
                 try:
                     with open("./config/config.json", 'r', encoding="utf-8") as file:
                         out_tar_str = "path_" + pause_sel + "_pause"
@@ -136,11 +137,12 @@ def case_3():
                         data[out_tar_str] = new_pause
                     with open("./config/config.json", 'r', encoding="utf-8") as file:
                         json.dump(data, file, indent=4)
-                except FileNotFoundError:
-                    print("Config file not found, recopy from repo.")
-            except TypeError:  # add error handling later
+                except FileNotFoundError as error:
+                    errors.EPConfigError(error)
+                    print("Config file not found, recopy from repo, or contact Author.")
+            except TypeError:
                 print("Error, you must only enter a number 0-10")
-        except TypeError:  # add error handling later
+        except TypeError:
             print("Error, only numbers 1-5 are acceptable inputs")
 
 
@@ -162,8 +164,9 @@ def case_4():
                 data[path_3_y_cord] = path_3_y_cord
             with open("./config/config.json", 'r', encoding="utf-8") as file:
                 json.dump(data, file, indent=4)
-        except FileNotFoundError:
-            print("Config file not found, recopy from repo.")
+        except FileNotFoundError as error:
+            errors.EPConfigError(error)
+            print("Config file not found, recopy from repo, or contact Author.")
 
     def path_4():
         """Function to update path 4"""
@@ -180,8 +183,9 @@ def case_4():
                 data[path_4_y_cord] = path_4_y_cord
             with open("./config/config.json", 'r', encoding="utf-8") as file:
                 json.dump(data, file, indent=4)
-        except FileNotFoundError:
-            print("Config file not found, recopy from repo.")
+        except FileNotFoundError as error:
+            errors.EPConfigError(error)
+            print("Config file not found, recopy from repo, or contact Author.")
     try:
         sel = input("Type 3 to update path 3, 4 to update path 4, 9 to update both,"
                     " then press Enter.")
@@ -194,8 +198,8 @@ def case_4():
             path_3()
             input("Press enter to update path 4")
             path_4()
-    except TypeError:  # add error handling later
-        print("Invalid Entry.")
+    except TypeError:
+        print("Invalid Entry, number values for x and y coordinates only.")
 
 
 def case_5():
@@ -217,10 +221,11 @@ def case_5():
                     data[res_y] = res_y
                 with open("./config/config.json", 'r', encoding="utf-8") as file:
                     json.dump(data, file, indent=4)
-            except FileNotFoundError:
-                print("Config file not found, recopy from repo.")
-    except TypeError:  # add error handling later
-        print("Invalid Entry.")
+            except FileNotFoundError as error:
+                errors.EPConfigError(error)
+                print("Config file not found, recopy from repo, or contact Author.")
+    except TypeError:
+        print("Invalid Entry,, Y or N only.")
 
 
 def case_6():
@@ -237,5 +242,8 @@ def case_6():
             print("Returning to main menu.")
         else:
             print("Invalid Entry.")
-    except TypeError:  # add error handling later
-        print("Invalid Entry.")
+    except TypeError:
+        print("Invalid Entry, Y or N only.")
+    except FileNotFoundError as error:
+        errors.EPConfigError(error)
+        print("Config file not found, recopy from repo, or contact Author.")

@@ -4,7 +4,7 @@ ___author__ = "Jessie Campbell"
 __copyright__ = "Jessie Campbell"
 __credits__ = ["Jessie Campbell"]
 __license__ = "MIT"
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 __maintainer__ = "Jessie Campbell"
 __email__ = "jessie.t.campbell@gmail.com"
 __status__ = "Alpha"
@@ -71,7 +71,10 @@ def move_to_1(config):
 
     Position 1 is lower left hand corner by default, specifically the icon
     that has an 'i' character in a circle.
-    :return: None
+
+    :param config: (class) **Configuration object build from the config json file.**
+    :rtype: **None**
+    :return: **None**
     """
     path_name = "Target 1"  # name of the path, used for execution logging
     x_cord = None
@@ -125,7 +128,10 @@ def move_to_2(config):
 
     Position 2 is near the screen center, specifically the icon that has the
     1 crossing stop sign like icon.
-    :return: None
+
+    :param config: (class) **Configuration object build from the config json file.**
+    :rtype: **None**
+    :return: **None**
     """
     path_name = "Target 2"  # name of the path, used for execution logging
     x_cord = None
@@ -174,7 +180,10 @@ def move_to_3(config):
 
     Position 3 is lower right of center, and is specified by a word, specifically the word
     "continue".
-    :return: None
+
+    :param config: (class) **Configuration object build from the config json file.**
+    :rtype: **None**
+    :return: **None**
     """
     path_name = "Target 3"  # name of the path, used for execution logging
     x_cord = config.get_config().get("path_3_x_cord")
@@ -200,7 +209,10 @@ def move_to_4(config):
 
     Position 4 is the upper right of center, and is specified by an x. This is the final movement
     of the script.
-    :return: None
+
+    :param config: (class) **Configuration object build from the config json file.**
+    :rtype: **None**
+    :return: **None**
     """
     path_name = "Target 4"  # name of the path, used for execution logging
     x_cord = config.get_config().get("path_4_x_cord")
@@ -223,7 +235,8 @@ def move_to_4(config):
 def click_local():
     """
     Method to click the mouse when at the required location using delays.
-    :return: None
+
+    :return: **None**
     """
     path_name = "local click function"
     # base movement time in seconds, subject to the delay degrade below
@@ -241,7 +254,9 @@ def click_local():
 def action(config):
     """
     Method to run the sequence.
-    :return: None
+
+    :param config: (class) **Configuration object build from the config json file.**
+    :return: **None**
     """
     de_pau = config.get_config().get("default_pause")
     pyautogui.PAUSE = config.get_config().get("py_a_gui_pause")
@@ -269,7 +284,9 @@ def test_interface(config):
 
     This method opens a CLI to request user input to either start the sequence by calling
     the action(), or exits the program.
-    :return: None
+
+    :param config: (class) **Configuration object build from the config json file.**
+    :return: **None**
     """
     print("Lets go")
     running = True
@@ -290,7 +307,11 @@ def find_path(obj, conf):
 
     This function calls the locate function from pyautogui, and returns the location of the
     target x and y coordinates.
-    :return: cord (tuple): the tuple of the x and y cord of the target object
+
+    :param obj: (str) **String of the file path to the target object.**
+    :param conf: (float) **Float of the percentage to use as confidence level to use.**
+    :rtype: **tuple**
+    :return: **cord**: The tuple of the x and y cord of the target object
     """
     path_name = "local find function"
     cord = None
@@ -304,7 +325,9 @@ def find_path(obj, conf):
 def get_config():
     """
     Method to get the configuration settings from a json file.
-    :return: config (dict): A dictionary of the overall configuration settings for the program
+
+    :rtype: **dict**
+    :return: **config**: A dictionary of the overall configuration settings for the program
     """
     try:
         with open("./config/config.json", 'r', encoding="utf-8") as file:
@@ -318,7 +341,8 @@ def get_config():
 def config_me():
     """
     Function to run the config option logic
-    :return: None
+
+    :return: **None**
     """
     try:
         config_obj = Config("config", get_config())  # create the config memory object
@@ -346,7 +370,8 @@ def config_me():
 class Config:
     """
     Class to define configuration items in memory.
-    :return: None
+
+    :return: **None**
     """
 
     def __init__(self, name, config):
