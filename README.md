@@ -16,7 +16,7 @@
 [x] 0.1.0 - Adds Configuration using JSON file, first .exe version using PyInstaller  
 [x] 0.1.1 - Adds initial Configuration Interface using CLI  
 [x] 0.1.2 - Updates exception handling, and improved logging with custom exceptions and txt file output  
-[ ] 0.1.3 - Adds default locations based on screen resolution  
+[ ] 0.1.3 - Adds default locations based for path targets  
 [ ] 0.1.4 - If path 1 or path 2 targets not found, uses default locations based on screen resolution  
 
 --Beta--  
