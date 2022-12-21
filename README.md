@@ -16,7 +16,7 @@
 [x] 0.1.0 - Adds Configuration using JSON file, first .exe version using PyInstaller  
 [x] 0.1.1 - Adds initial Configuration Interface using CLI  
 [x] 0.1.2 - Updates exception handling, and improved logging with custom exceptions and txt file output  
-[X] 0.1.3 - Adds default locations based for path 1 or path 2 targets, used if targets not found  
+[x] 0.1.3 - Adds default locations based for path 1 or path 2 targets, used if targets not found  
 [ ] 0.1.4 - Revised Configuration Interface, only relevant options given, can be re-entered from main CLI  
 [ ] 0.1.5 - Attempts to move mouse back to CLI window to setup for next trigger (temporary until hotkey function added in Beta)  
 
