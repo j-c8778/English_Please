@@ -18,6 +18,7 @@
 [x] 0.1.2 - Updates exception handling, and improved logging with custom exceptions and txt file output  
 [ ] 0.1.3 - Adds default locations based for path targets  
 [ ] 0.1.4 - If path 1 or path 2 targets not found, uses default locations based on screen resolution  
+[ ] 0.1.5 - Revised Configuration Interface, only relevant options given, can be re-entered from main CLI
 
 --Beta--  
 [ ] 0.2.0 - Adds hotkey listener and hotkey definition functionality  
