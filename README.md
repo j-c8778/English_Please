@@ -17,8 +17,8 @@
 [x] 0.1.1 - Adds initial Configuration Interface using CLI  
 [x] 0.1.2 - Updates exception handling, and improved logging with custom exceptions and txt file output  
 [x] 0.1.3 - Adds default locations based for path targets and if path 1 or path 2 targets not found, uses default locations based on screen resolution  
-[ ] 0.1.4 - Revised Configuration Interface, only relevant options given, can be re-entered from main CLI
-[ ] 0.1.5 - Attempts to move mouse back to CLI window to setup for next trigger (temporary until hotkey function added in Beta)
+[ ] 0.1.4 - Revised Configuration Interface, only relevant options given, can be re-entered from main CLI  
+[ ] 0.1.5 - Attempts to move mouse back to CLI window to setup for next trigger (temporary until hotkey function added in Beta)  
 
 --Beta--  
 [ ] 0.2.0 - Adds hotkey listener and hotkey definition functionality  
