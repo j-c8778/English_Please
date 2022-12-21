@@ -12,7 +12,7 @@ __status__ = "Alpha"
 Module to move the mouse to a specified location series, and click the left mouse button,
 to interact with a known context menu.
 
-Uses the following functions:
+Uses the following Methods:
 ***test_interface - Testing interface for manual control via CLI.***
 *main - Main loop of the module
 *move_to_1 - Moves mouse to location 1, with random delay.
@@ -22,8 +22,8 @@ Uses the following functions:
 *click - Clicks the mouse on call, with random delay.
 *action - Runs the sequence of events.
 *find_path - Finds the end point to aim of the specified location.
-*get_config - Function to locate and serialize config json.
-*config_me - Function to run the config option logic.
+*get_config - Method to locate and serialize config json.
+*config_me - Method to run the config option logic.
 
 Defines the following classes:
 *Config - In memory storage of active configuration settings.
@@ -87,12 +87,13 @@ def move_to_1(config):
     pyautogui.moveTo(400, 400)
     pyautogui.click()
     # testing adds******************************** suspect it is due to a loading delay in exe mode
+    conf = config.get_config().get('search_confid')
     try:
-        cord = (find_path(obj, 0.9))
+        cord = (find_path(obj, conf))
         if cord is None:
             time.sleep(0.5)
             waited = True
-            cord = (find_path(obj, 0.9))
+            cord = (find_path(obj, conf))
         x_cord = cord[0]
         y_cord = cord[1]
     except TypeError:
@@ -109,13 +110,15 @@ def move_to_1(config):
     tune_y = config.get_config().get('path_1_y_tune')
     try:
         if control == 1:
-            pass
+            x_cord = config.get_config().get('path_1_x_default') + tune_x - pos_degrade
+            y_cord = config.get_config().get('path_1_y_default') + tune_x - pos_degrade
         else:
             x_cord = x_cord + tune_x - pos_degrade
             y_cord = y_cord + tune_y - pos_degrade
     except TypeError:
         path_name = path_name + " Final"
         errors.PathLockError(path_name, waited)
+
     try:
         pyautogui.moveTo(x_cord, y_cord, delay)
     except UnboundLocalError:
@@ -139,12 +142,13 @@ def move_to_2(config):
     control = 0  # flag variable if exception passed set to 1 before exception logging
     waited = False
     obj = "./graphics/p2_target_obj.png"
+    conf = config.get_config().get('search_confid')
     try:
-        cord = (find_path(obj, 0.9))
+        cord = (find_path(obj, conf))
         if cord is None:
             time.sleep(0.5)
             waited = True
-            cord = (find_path(obj, 0.9))
+            cord = (find_path(obj, conf))
         x_cord = cord[0]
         y_cord = cord[1]
     except TypeError:
@@ -161,13 +165,15 @@ def move_to_2(config):
     tune_y = config.get_config().get('path_2_y_tune')
     try:
         if control == 1:
-            pass
+            x_cord = config.get_config().get('path_2_x_default') + tune_x - pos_degrade
+            y_cord = config.get_config().get('path_2_y_default') + tune_x - pos_degrade
         else:
             x_cord = x_cord + tune_x - pos_degrade
             y_cord = y_cord + tune_y - pos_degrade
     except TypeError:
         path_name = path_name + " Final"
         errors.PathLockError(path_name, waited)
+
     try:
         pyautogui.moveTo(x_cord, y_cord, delay)
     except UnboundLocalError:
@@ -238,7 +244,7 @@ def click_local():
 
     :return: **None**
     """
-    path_name = "local click function"
+    path_name = "local_click_function"
     # base movement time in seconds, subject to the delay degrade below
     delay_base = 0.05
     # degrade of the base delay, a random floating point number
@@ -263,7 +269,8 @@ def action(config):
     move_to_1(config)
     time.sleep(de_pau)
     click_local()
-    time.sleep(config.get_config().get("path_2_pause"))  # path 2 slower to load, longer wait
+    # path 2 slower to load, longer wait
+    time.sleep(config.get_config().get("path_2_pause"))
     move_to_2(config)
     time.sleep(de_pau)
     click_local()
@@ -303,9 +310,9 @@ def test_interface(config):
 
 def find_path(obj, conf):
     """
-    This function will locate the coordinates for path 2.
+    This Method will locate the coordinates for path 2.
 
-    This function calls the locate function from pyautogui, and returns the location of the
+    This Method calls the locate method from pyautogui, and returns the location of the
     target x and y coordinates.
 
     :param obj: (str) **String of the file path to the target object.**
@@ -313,7 +320,7 @@ def find_path(obj, conf):
     :rtype: **tuple**
     :return: **cord**: The tuple of the x and y cord of the target object
     """
-    path_name = "local find function"
+    path_name = "local_find_function"
     cord = None
     try:
         cord = pyautogui.locateOnScreen(obj, confidence=conf)
@@ -340,7 +347,7 @@ def get_config():
 
 def config_me():
     """
-    Function to run the config option logic
+    Method to run the config option logic
 
     :return: **None**
     """
@@ -394,8 +401,8 @@ def main():
     try:
         # config_me()
         config_obj = Config("config", get_config())  # create the config memory object
-        action(config_obj)
-        # test_interface(config_obj)
+        # action(config_obj)
+        test_interface(config_obj)
     except errors.EnglishPleaseException as error:
         errors.EnglishPleaseException(error)
 

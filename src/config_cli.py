@@ -77,34 +77,42 @@ def case_1():
 
 def case_2():
     """Function to run case 2 logic to update path targets"""
+    path_sel = None
     try:
-        path_sel = input("Type the path (1-4) to tune, and press enter.\n"
-                         "Enter 5 to return to the menu.")
-        while int(path_sel) != range(1 - 5):
-            print("you must enter a value 1-5")
-            path_sel = input("Type the path (1-4) to tune, and press enter.\n")
-        try:
-            if path_sel == "5":
-                pass
-            else:
-                new_x = input(f"Enter the new X pixel path {path_sel}"
-                              f" target, then press enter:")
-                new_y = input(f"Enter the new X pixel path {path_sel} "
-                              f"target, then press enter:")
-                try:
-                    with open("./config/config.json", 'r', encoding="utf-8") as file:
-                        data = json.load(file)
-                        data['path_1_x_tune'] = new_x
-                        data['path_1_y_tune'] = new_y
-                    with open("./config/config.json", 'r', encoding="utf-8") as file:
-                        json.dump(data, file, indent=4)
-                except FileNotFoundError as error:
-                    errors.EPConfigError(error)
-                    print("Config file not found, recopy from repo, or contact Author.")
-        except TypeError:
-            print("Error, you must only enter a number 0-9999")
+        path_sel = int(input("Type the path (1-4) to tune, and press enter.\n"
+                             "Enter 5 to return to the menu."))
+        # while path_sel not in range(1, 6, 1):
+        #     print("you must enter a value 1-4")
+        #     path_sel = int(input("Type the path (1-4) to tune, and press enter.\n"))
+        #     print(path_sel)
+        #     print(type(path_sel))
+        #     if path_sel in range(1, 6, 1):
+        #         print(path_sel)
+        #         break
     except TypeError:
         print("Error, only numbers 1-5 are acceptable inputs")
+
+    try:
+        if path_sel == 5:
+            print("Ok")
+        elif path_sel != 5:
+            new_x = int(input(f"Enter the new X pixel path {path_sel}"
+                              f" target, then press enter:"))
+            new_y = int(input(f"Enter the new Y pixel path {path_sel} "
+                              f"target, then press enter:"))
+            try:
+                with open("./config/config.json", 'r', encoding="utf-8") as file:
+                    data = json.load(file)
+                    data['path_1_x_tune'] = new_x
+                    data['path_1_y_tune'] = new_y
+                with open("./config/config.json", 'w', encoding="utf-8") as file:
+                    json.dump(data, file, indent=4)
+            except FileNotFoundError as error:
+                errors.EPConfigError(error)
+                print("Config file not found, recopy from repo, or contact Author.")
+    except TypeError as error:
+        print("Error, you must only enter a number 0-9999")
+        print(error)
 
 
 def case_3():
@@ -112,17 +120,17 @@ def case_3():
     running = True
     while running:
         try:
-            pause_sel = input("Type the path (1-4) to tune, and press enter.\n"
-                              "Enter 5 to return to the menu.")
+            pause_sel = int(input("Type the path (1-4) to tune, and press enter.\n"
+                                  "Enter 5 to return to the menu."))
             while int(pause_sel) != range(1 - 5):
                 print("you must enter a value 1-5")
-                path_sel = input("Type the path (1-4) to tune, and press enter.\n")
+                path_sel = int(input("Type the path (1-4) to tune, and press enter.\n"))
                 if path_sel == "5":
                     pass
             try:
                 print("Note: The limit is 10 Seconds max Pause.\n")
-                new_pause = input(f"Enter the new pause time for path {pause_sel},"
-                                  f" then press enter:\n")
+                new_pause = float(input(f"Enter the new pause time for path {pause_sel},"
+                                        f" then press enter:\n"))
                 try:
                     while float(new_pause) != range(1 - 10):
                         print("you must enter a number value 1-10")
@@ -132,10 +140,10 @@ def case_3():
                     print("Invalid Entry, numbers 1-10 only.")
                 try:
                     with open("./config/config.json", 'r', encoding="utf-8") as file:
-                        out_tar_str = "path_" + pause_sel + "_pause"
+                        out_tar_str = "path_" + str(pause_sel) + "_pause"
                         data = json.load(file)
                         data[out_tar_str] = new_pause
-                    with open("./config/config.json", 'r', encoding="utf-8") as file:
+                    with open("./config/config.json", 'w', encoding="utf-8") as file:
                         json.dump(data, file, indent=4)
                 except FileNotFoundError as error:
                     errors.EPConfigError(error)
@@ -162,7 +170,7 @@ def case_4():
                 data = json.load(file3)
                 data[path_3_x_cord] = path_3_x_cord
                 data[path_3_y_cord] = path_3_y_cord
-            with open("./config/config.json", 'r', encoding="utf-8") as file:
+            with open("./config/config.json", 'w', encoding="utf-8") as file:
                 json.dump(data, file, indent=4)
         except FileNotFoundError as error:
             errors.EPConfigError(error)
@@ -181,14 +189,15 @@ def case_4():
                 data = json.load(file4)
                 data[path_4_x_cord] = path_4_x_cord
                 data[path_4_y_cord] = path_4_y_cord
-            with open("./config/config.json", 'r', encoding="utf-8") as file:
+            with open("./config/config.json", 'w', encoding="utf-8") as file:
                 json.dump(data, file, indent=4)
         except FileNotFoundError as error:
             errors.EPConfigError(error)
             print("Config file not found, recopy from repo, or contact Author.")
+
     try:
-        sel = input("Type 3 to update path 3, 4 to update path 4, 9 to update both,"
-                    " then press Enter.")
+        sel = int(input("Type 3 to update path 3, 4 to update path 4, 9 to update both,"
+                        " then press Enter."))
         if sel == 3:
             path_3()
         elif sel == 4:
@@ -219,7 +228,7 @@ def case_5():
                     data = json.load(file)
                     data[res_x] = res_x
                     data[res_y] = res_y
-                with open("./config/config.json", 'r', encoding="utf-8") as file:
+                with open("./config/config.json", 'w', encoding="utf-8") as file:
                     json.dump(data, file, indent=4)
             except FileNotFoundError as error:
                 errors.EPConfigError(error)
