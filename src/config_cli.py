@@ -130,16 +130,21 @@ def case_3():
         with open("./config/config.json", 'r', encoding="utf-8") as file:
             data = json.load(file)
             c_res = data.get("active_res")
-            print("Current Resolution is set at: " + c_res)
+            c_res2 = data.get(c_res)
+            print("Current Resolution is set at: " + c_res2 + "\n")
             choice = input("To change this, type Y or"
                            " to keep this setting type N,"
-                           " then hit enter.")
+                           " then hit enter.\n")
             if choice.lower() == "y":
                 choice2 = data.get("res_1")
                 choice3 = data.get("res_2")
-                choice4 = input(f"Type the resolution you want, {choice2} or {choice3}")
+                print(type(choice2))
+                print(choice2)
+                choice4 = input(f"Type the resolution you want, {choice2} or {choice3}\n")
+                print(choice4)
+                print(type(choice4))
                 if choice4 == choice2:
-                    data["active_res"] = choice2
+                    data["active_res"] = "res_1"
                     data["p1_x"] = data["p1_1920x1080_x"]
                     data["p1_y"] = data["p1_1920x1080_y"]
                     data["p2_x"] = data["p2_1920x1080_x"]
@@ -149,7 +154,7 @@ def case_3():
                     data["p4_x"] = data["p4_1920x1080_x"]
                     data["p4_y"] = data["p4_1920x1080_y"]
                 elif choice4 == choice3:
-                    data["active_res"] = choice3
+                    data["active_res"] = "res_2"
                     data["p1_x"] = data["p1_1680x1050_x"]
                     data["p1_y"] = data["p1_1680x1050_y"]
                     data["p2_x"] = data["p2_1680x1050_x"]
@@ -158,7 +163,7 @@ def case_3():
                     data["p3_y"] = data["p3_1680x1050_y"]
                     data["p4_x"] = data["p4_1680x1050_x"]
                     data["p4_y"] = data["p4_1680x1050_y"]
-                else:
+                elif choice4 != choice2 or choice4 != choice3:
                     print(f"You did not type in a valid resolution,"
                           f" only {choice2} or {choice3} are supported currently.")
             else:
@@ -168,8 +173,9 @@ def case_3():
     except FileNotFoundError as error:
         errors.EPConfigError(error)
         print("Config file not found, recopy from repo, or contact Author.")
-    except TypeError:
-        print("Invalid entry type.")
+    except TypeError as error:
+        print("Invalid entry type, log generated.")
+        errors.EPConfigError(error)
 
 
 def case_4():

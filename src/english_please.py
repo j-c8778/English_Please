@@ -100,11 +100,12 @@ def move_to_1(config):
         control = 1  # set flag value to 1 to skip cord_f errors
         errors.PathLockError(path_name, waited)
     delay = random.uniform(0.21, 0.29)
-    pos_degrade = randrange(0, 3)
+    pos_degrade = 0  # randrange(0, 3)
     try:
         if control == 1:
-            x_cord = config.get_config().get('p1_x') - pos_degrade
-            y_cord = config.get_config().get('p1_y') - pos_degrade
+            # path adjusted based on old tune settings
+            x_cord = config.get_config().get('p1_x') - pos_degrade + 8  # was 5
+            y_cord = config.get_config().get('p1_y') - pos_degrade + 5  # was 3
         else:
             x_cord = x_cord - pos_degrade
             y_cord = y_cord - pos_degrade
@@ -148,11 +149,12 @@ def move_to_2(config):
         errors.PathLockError(path_name, waited)
     # movement time in seconds
     delay = random.uniform(0.21, 0.29)
-    pos_degrade = randrange(0, 3)
+    pos_degrade = 0  # randrange(0, 3)
     try:
         if control == 1:
-            x_cord = config.get_config().get('p2_x') - pos_degrade
-            y_cord = config.get_config().get('p2_y') - pos_degrade
+            # path adjusted based on old tune settings
+            x_cord = config.get_config().get('p2_x') - pos_degrade + 13  # was 10
+            y_cord = config.get_config().get('p2_y') - pos_degrade + 18  # was 15
         else:
             x_cord = x_cord - pos_degrade
             y_cord = y_cord - pos_degrade
