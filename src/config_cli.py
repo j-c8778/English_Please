@@ -4,7 +4,7 @@ ___author__ = "Jessie Campbell"
 __copyright__ = "Jessie Campbell"
 __credits__ = ["Jessie Campbell"]
 __license__ = "MIT"
-__version__ = "0.1.2"
+__version__ = "0.1.4"
 __maintainer__ = "Jessie Campbell"
 __email__ = "jessie.t.campbell@gmail.com"
 __status__ = "Alpha"
@@ -37,14 +37,10 @@ def menu_print():
     print("Welcome to the English Please Configuration Menu\n"
           "Please enter the number for your desired selection, then press enter:\n"
           "\n1) Enable/Disable full screen mode.\n"
-          "2) Change your tuning settings.\n"
-          "3) Change the pause times.\n"
-          "4) Change the path 3 and/or path 4 target locations.\n"
-          "5) Update the current screen resolution.\n"
-          "6) Reset to default configuration settings.\n"
-          "9) Exit the configuration menu"
-          " (sets config status to False, manual reset only"
-          " in the json file until future revision).")
+          "2) Change the path 3 and/or path 4 target locations.\n"
+          "3) Update the current screen resolution.\n"
+          "4) Reset to default configuration settings.\n"
+          "9) Exit the configuration menu")
 
 
 def config_menu_control(mode):
@@ -54,16 +50,12 @@ def config_menu_control(mode):
     match mode:
         case "1":  # Enable/Disable full screen mode.
             case_1()
-        case "2":  # Change your tuning settings.
+        case "2":  # Change the path 3 and/or path 4 target locations.
             case_2()
-        case "3":  # Change the pause times.
+        case "3":  # Update the current screen resolution in the config file.
             case_3()
-        case "4":  # Change the path 3 and/or path 4 target locations.
+        case "4":  # Reset to default configuration settings.
             case_4()
-        case "5":  # Update the current screen resolution in the config file.
-            case_5()
-        case "6":  # Reset to default configuration settings.
-            case_6()
         case "9":  # exit case
             return False
         case _:  # default to catch invalid choices
@@ -76,85 +68,6 @@ def case_1():
 
 
 def case_2():
-    """Function to run case 2 logic to update path targets"""
-    path_sel = None
-    try:
-        path_sel = int(input("Type the path (1-4) to tune, and press enter.\n"
-                             "Enter 5 to return to the menu."))
-        # while path_sel not in range(1, 6, 1):
-        #     print("you must enter a value 1-4")
-        #     path_sel = int(input("Type the path (1-4) to tune, and press enter.\n"))
-        #     print(path_sel)
-        #     print(type(path_sel))
-        #     if path_sel in range(1, 6, 1):
-        #         print(path_sel)
-        #         break
-    except TypeError:
-        print("Error, only numbers 1-5 are acceptable inputs")
-
-    try:
-        if path_sel == 5:
-            print("Ok")
-        elif path_sel != 5:
-            new_x = int(input(f"Enter the new X pixel path {path_sel}"
-                              f" target, then press enter:"))
-            new_y = int(input(f"Enter the new Y pixel path {path_sel} "
-                              f"target, then press enter:"))
-            try:
-                with open("./config/config.json", 'r', encoding="utf-8") as file:
-                    data = json.load(file)
-                    data['path_1_x_tune'] = new_x
-                    data['path_1_y_tune'] = new_y
-                with open("./config/config.json", 'w', encoding="utf-8") as file:
-                    json.dump(data, file, indent=4)
-            except FileNotFoundError as error:
-                errors.EPConfigError(error)
-                print("Config file not found, recopy from repo, or contact Author.")
-    except TypeError as error:
-        print("Error, you must only enter a number 0-9999")
-        print(error)
-
-
-def case_3():
-    """Function to run case 3 logic to update pause times"""
-    running = True
-    while running:
-        try:
-            pause_sel = int(input("Type the path (1-4) to tune, and press enter.\n"
-                                  "Enter 5 to return to the menu."))
-            while int(pause_sel) != range(1 - 5):
-                print("you must enter a value 1-5")
-                path_sel = int(input("Type the path (1-4) to tune, and press enter.\n"))
-                if path_sel == "5":
-                    pass
-            try:
-                print("Note: The limit is 10 Seconds max Pause.\n")
-                new_pause = float(input(f"Enter the new pause time for path {pause_sel},"
-                                        f" then press enter:\n"))
-                try:
-                    while float(new_pause) != range(1 - 10):
-                        print("you must enter a number value 1-10")
-                        new_pause = input(f"Enter the new pause time for path {pause_sel},"
-                                          f" then press enter:")
-                except TypeError:
-                    print("Invalid Entry, numbers 1-10 only.")
-                try:
-                    with open("./config/config.json", 'r', encoding="utf-8") as file:
-                        out_tar_str = "path_" + str(pause_sel) + "_pause"
-                        data = json.load(file)
-                        data[out_tar_str] = new_pause
-                    with open("./config/config.json", 'w', encoding="utf-8") as file:
-                        json.dump(data, file, indent=4)
-                except FileNotFoundError as error:
-                    errors.EPConfigError(error)
-                    print("Config file not found, recopy from repo, or contact Author.")
-            except TypeError:
-                print("Error, you must only enter a number 0-10")
-        except TypeError:
-            print("Error, only numbers 1-5 are acceptable inputs")
-
-
-def case_4():
     """Function to change the path 3 and/or path 4 target locations."""
 
     def path_3():
@@ -211,33 +124,55 @@ def case_4():
         print("Invalid Entry, number values for x and y coordinates only.")
 
 
-def case_5():
+def case_3():
     """Function to update the current screen resolution in the config file."""
-    res_x, res_y = pyautogui.size()
-    print("Your screen resolution is: " + str(res_x) + "x" + str(res_y))
     try:
-        sel = input("If this is correct, type Y and hit enter, if not,"
-                    " type N and hit enter to set manually.")
-        if sel.lower() == "y":
-            print("Config File updated.")
-        elif sel.lower() == "n":
-            res_x = int(input("Type your x axis size and hit enter."))
-            res_y = int(input("Type your y axis size and hit enter."))
-            try:
-                with open("./config/config.json", 'r', encoding="utf-8") as file:
-                    data = json.load(file)
-                    data[res_x] = res_x
-                    data[res_y] = res_y
-                with open("./config/config.json", 'w', encoding="utf-8") as file:
-                    json.dump(data, file, indent=4)
-            except FileNotFoundError as error:
-                errors.EPConfigError(error)
-                print("Config file not found, recopy from repo, or contact Author.")
+        with open("./config/config.json", 'r', encoding="utf-8") as file:
+            data = json.load(file)
+            c_res = data.get("active_res")
+            print("Current Resolution is set at: " + c_res)
+            choice = input("To change this, type Y or"
+                           " to keep this setting type N,"
+                           " then hit enter.")
+            if choice.lower() == "y":
+                choice2 = data.get("res_1")
+                choice3 = data.get("res_2")
+                choice4 = input(f"Type the resolution you want, {choice2} or {choice3}")
+                if choice4 == choice2:
+                    data["active_res"] = choice2
+                    data["p1_x"] = data["p1_1920x1080_x"]
+                    data["p1_y"] = data["p1_1920x1080_y"]
+                    data["p2_x"] = data["p2_1920x1080_x"]
+                    data["p2_y"] = data["p2_1920x1080_y"]
+                    data["p3_x"] = data["p3_1920x1080_x"]
+                    data["p3_y"] = data["p3_1920x1080_y"]
+                    data["p4_x"] = data["p4_1920x1080_x"]
+                    data["p4_y"] = data["p4_1920x1080_y"]
+                elif choice4 == choice3:
+                    data["active_res"] = choice3
+                    data["p1_x"] = data["p1_1680x1050_x"]
+                    data["p1_y"] = data["p1_1680x1050_y"]
+                    data["p2_x"] = data["p2_1680x1050_x"]
+                    data["p2_y"] = data["p2_1680x1050_y"]
+                    data["p3_x"] = data["p3_1680x1050_x"]
+                    data["p3_y"] = data["p3_1680x1050_y"]
+                    data["p4_x"] = data["p4_1680x1050_x"]
+                    data["p4_y"] = data["p4_1680x1050_y"]
+                else:
+                    print(f"You did not type in a valid resolution,"
+                          f" only {choice2} or {choice3} are supported currently.")
+            else:
+                print("Retaining active resolution.")
+        with open("./config/config.json", 'w', encoding="utf-8") as file:
+            json.dump(data, file, indent=4)
+    except FileNotFoundError as error:
+        errors.EPConfigError(error)
+        print("Config file not found, recopy from repo, or contact Author.")
     except TypeError:
-        print("Invalid Entry,, Y or N only.")
+        print("Invalid entry type.")
 
 
-def case_6():
+def case_4():
     """Function to reset to default configuration settings."""
     input("Warning, you are about to reset the config file to default, press enter to continue.")
     try:

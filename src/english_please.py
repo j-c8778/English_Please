@@ -1,10 +1,10 @@
 """
 __filename__ = "english_please.py"
-___author__ = "Jessie Campbell"
+__author__ = "Jessie Campbell"
 __copyright__ = "Jessie Campbell"
 __credits__ = ["Jessie Campbell"]
 __license__ = "MIT"
-__version__ = "0.1.2"
+__version__ = "0.1.4"
 __maintainer__ = "Jessie Campbell"
 __email__ = "jessie.t.campbell@gmail.com"
 __status__ = "Alpha"
@@ -99,26 +99,18 @@ def move_to_1(config):
     except TypeError:
         control = 1  # set flag value to 1 to skip cord_f errors
         errors.PathLockError(path_name, waited)
-    # movement time in seconds
-    delay_base = 0.25
-    # degrade of the base delay, a random floating point number
-    delay_degrade = random.uniform(0.01, 0.04)
-    delay = delay_base - delay_degrade
-    # degrade of the base position, a random int
+    delay = random.uniform(0.21, 0.29)
     pos_degrade = randrange(0, 3)
-    tune_x = config.get_config().get('path_1_x_tune')
-    tune_y = config.get_config().get('path_1_y_tune')
     try:
         if control == 1:
-            x_cord = config.get_config().get('path_1_x_default') + tune_x - pos_degrade
-            y_cord = config.get_config().get('path_1_y_default') + tune_x - pos_degrade
+            x_cord = config.get_config().get('p1_x') - pos_degrade
+            y_cord = config.get_config().get('p1_y') - pos_degrade
         else:
-            x_cord = x_cord + tune_x - pos_degrade
-            y_cord = y_cord + tune_y - pos_degrade
+            x_cord = x_cord - pos_degrade
+            y_cord = y_cord - pos_degrade
     except TypeError:
         path_name = path_name + " Final"
         errors.PathLockError(path_name, waited)
-
     try:
         pyautogui.moveTo(x_cord, y_cord, delay)
     except UnboundLocalError:
@@ -155,25 +147,18 @@ def move_to_2(config):
         control = 1  # set flag value to 1 to skip cord_f errors
         errors.PathLockError(path_name, waited)
     # movement time in seconds
-    delay_base = 0.25
-    # degrade of the base delay, a random floating point number
-    delay_degrade = random.uniform(0.01, 0.04)
-    delay = delay_base - delay_degrade
-    # degrade of the base position, a random int
+    delay = random.uniform(0.21, 0.29)
     pos_degrade = randrange(0, 3)
-    tune_x = config.get_config().get('path_2_x_tune')
-    tune_y = config.get_config().get('path_2_y_tune')
     try:
         if control == 1:
-            x_cord = config.get_config().get('path_2_x_default') + tune_x - pos_degrade
-            y_cord = config.get_config().get('path_2_y_default') + tune_x - pos_degrade
+            x_cord = config.get_config().get('p2_x') - pos_degrade
+            y_cord = config.get_config().get('p2_y') - pos_degrade
         else:
-            x_cord = x_cord + tune_x - pos_degrade
-            y_cord = y_cord + tune_y - pos_degrade
+            x_cord = x_cord - pos_degrade
+            y_cord = y_cord - pos_degrade
     except TypeError:
         path_name = path_name + " Final"
         errors.PathLockError(path_name, waited)
-
     try:
         pyautogui.moveTo(x_cord, y_cord, delay)
     except UnboundLocalError:
@@ -192,17 +177,11 @@ def move_to_3(config):
     :return: **None**
     """
     path_name = "Target 3"  # name of the path, used for execution logging
-    x_cord = config.get_config().get("path_3_x_cord")
-    y_cord = config.get_config().get("path_3_y_cord")
     # movement time in seconds
-    delay_base = 0.25
-    # degrade of the base delay, a random floating point number
-    delay_degrade = random.uniform(0.01, 0.04)
-    delay = delay_base - delay_degrade
-    # degrade of the base position, a random int
+    delay = random.uniform(0.21, 0.29)
     pos_degrade = randrange(0, 3)
-    x_cord = x_cord - pos_degrade
-    y_cord = y_cord - pos_degrade
+    x_cord = config.get_config().get("p3_x") - pos_degrade
+    y_cord = config.get_config().get("p3_y") - pos_degrade
     try:
         pyautogui.moveTo(x_cord, y_cord, delay)
     except pyautogui.PyAutoGUIException as error:
@@ -221,17 +200,10 @@ def move_to_4(config):
     :return: **None**
     """
     path_name = "Target 4"  # name of the path, used for execution logging
-    x_cord = config.get_config().get("path_4_x_cord")
-    y_cord = config.get_config().get("path_4_y_cord")
-    # base movement time in seconds, subject to the delay degrade below
-    delay_base = 0.25
-    # degrade of the base delay, a random floating point number
-    delay_degrade = random.uniform(0.01, 0.04)
-    delay = delay_base - delay_degrade
-    # degrade of the base position, a random int
+    delay = random.uniform(0.21, 0.29)
     pos_degrade = randrange(0, 3)
-    x_cord = x_cord - pos_degrade
-    y_cord = y_cord - pos_degrade
+    x_cord = config.get_config().get("p4_x") - pos_degrade
+    y_cord = config.get_config().get("p4_y") - pos_degrade
     try:
         pyautogui.moveTo(x_cord, y_cord, delay)
     except pyautogui.PyAutoGUIException as error:
@@ -245,11 +217,7 @@ def click_local():
     :return: **None**
     """
     path_name = "local_click_function"
-    # base movement time in seconds, subject to the delay degrade below
-    delay_base = 0.05
-    # degrade of the base delay, a random floating point number
-    delay_degrade = random.uniform(0.0001, 0.0004)
-    delay = delay_base - delay_degrade
+    delay = random.uniform(0.045, 0.065)
     time.sleep(delay)
     try:
         pyautogui.click()
@@ -270,7 +238,7 @@ def action(config):
     time.sleep(de_pau)
     click_local()
     # path 2 slower to load, longer wait
-    time.sleep(config.get_config().get("path_2_pause"))
+    time.sleep(.55)
     move_to_2(config)
     time.sleep(de_pau)
     click_local()
@@ -298,11 +266,13 @@ def test_interface(config):
     print("Lets go")
     running = True
     while running is True:
-        var = input("\nHit 1 to start, 9 to exit.\n")
+        var = input("\nHit 1 to start, 5 to run config, 9 to exit.\n")
         if var == "1":
             action(config)
         elif var == "9":
             running = False
+        elif var == "5":
+            config_me("cmd")
         else:
             time.sleep(1)
             print("Waiting")
@@ -345,7 +315,7 @@ def get_config():
         return None
 
 
-def config_me():
+def config_me(status):
     """
     Method to run the config option logic
 
@@ -353,7 +323,7 @@ def config_me():
     """
     try:
         config_obj = Config("config", get_config())  # create the config memory object
-        if config_obj.get_config().get("config_required"):
+        if config_obj.get_config().get("config_required") or status == "cmd":
             print("Running Initial Configuration.")
             running = True
             while running:
@@ -399,7 +369,7 @@ def main():
     # config_obj = Config("config", get_config())  # create the config memory object
     # action(config_obj)
     try:
-        # config_me()
+        # config_me("initial")
         config_obj = Config("config", get_config())  # create the config memory object
         # action(config_obj)
         test_interface(config_obj)
