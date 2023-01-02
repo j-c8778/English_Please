@@ -107,8 +107,8 @@ def move_to_1(config):
             x_cord = config.get_config().get('p1_x') - pos_degrade + 8  # was 5
             y_cord = config.get_config().get('p1_y') - pos_degrade + 5  # was 3
         else:
-            x_cord = x_cord - pos_degrade
-            y_cord = y_cord - pos_degrade
+            x_cord = x_cord - pos_degrade + 5
+            y_cord = y_cord - pos_degrade + 3
     except TypeError:
         path_name = path_name + " Final"
         errors.PathLockError(path_name, waited)
@@ -156,8 +156,8 @@ def move_to_2(config):
             x_cord = config.get_config().get('p2_x') - pos_degrade + 13  # was 10
             y_cord = config.get_config().get('p2_y') - pos_degrade + 18  # was 15
         else:
-            x_cord = x_cord - pos_degrade
-            y_cord = y_cord - pos_degrade
+            x_cord = x_cord - pos_degrade + 10
+            y_cord = y_cord - pos_degrade + 15
     except TypeError:
         path_name = path_name + " Final"
         errors.PathLockError(path_name, waited)
